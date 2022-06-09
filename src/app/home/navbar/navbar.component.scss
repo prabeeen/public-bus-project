@@ -1,0 +1,24 @@
+.navBar{
+    padding: 0 10%;
+    height: 60px;
+    justify-content: space-between;
+    align-items: center;
+    background: #FFC2C7;
+}
+
+.flex{
+    display: flex;
+    flex-direction: row;
+}
+
+.navBar li{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+}
+
+#signIn{
+    padding : 0 24px 0 0;
+}
