@@ -1,0 +1,39 @@
+.imageContainer{
+    background-image: url("../../../assets/background-final.png");
+    width: 100%;
+    height: 110vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 10%;
+}
+
+.imageContainer>h1,a,p{
+    color: var(--white);
+    transform: translateY(-140%);
+}
+
+.button{
+    border: 1px solid var(--white);
+    border-radius: 4px;
+    padding: .5rem 1rem;
+    transition: 0.7sec;
+}
+
+.fill-green{
+    background: var(--primary-red);
+    color: var(--white);
+    border: none;
+}
+
+.button:hover{
+    background: #379B5C;
+}
+
+
+
+
+
