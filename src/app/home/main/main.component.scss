@@ -9,9 +9,10 @@
     flex-direction: column;
     justify-content: center;
     padding: 0 10%;
+    margin-bottom: 10%;
 }
 
-.imageContainer>h1,a,p{
+.imageContainer>h1,.imageContainer>a,.imageContainer>p{
     color: var(--white);
     transform: translateY(-140%);
 }
@@ -33,7 +34,41 @@
     background: #379B5C;
 }
 
+// ---------------------------Service related css-----------------------------------
 
+.service-div{
+    padding: 0 10%;
+    margin-bottom: 10%;
+}
+
+.service-div>h1{
+    text-align: center;
+    margin-bottom: 6%;
+}
+
+.red-color{
+    color:var(--primary-red);
+}
+
+.grid-container p{
+    color: black;
+}
+
+.service-one, .service-two, .service-three{
+    display: flex;
+    flex-direction: column;
+    box-shadow: 5px 5px 10px 0 grey;
+    border-radius: 8px;
+    padding: 3rem 4rem 3rem 2rem;
+
+}
+
+.grid-container{
+    margin-top: 5%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 1.5rem;
+}
 
 
 
