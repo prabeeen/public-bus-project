@@ -6,6 +6,12 @@
     background: var(--primary-black);
 }
 
+.nav-container{
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+}
+
 .logo{
     font-family: var(--heading-font);
     font-size: 32px;
