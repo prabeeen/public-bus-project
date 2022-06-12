@@ -14,17 +14,17 @@
 <div class="service-div">
     <h1>Our <span class="red-color">Services</span></h1>
     <div class="grid-container">
-        <div class="service-one">
+        <div class="service">
             <img src="" alt="">
             <h1>Heading 1</h1>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem cum nesciunt illo nostrum doloribus, recusandae molestias libero facilis perferendis facere nam! Voluptatum quam aut nemo quae ea sapiente eligendi deserunt.</p>
         </div>
-        <div class="service-two">
+        <div class="service">
             <img src="" alt="">
             <h1>Heading 2</h1>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem cum nesciunt illo nostrum doloribus, recusandae molestias libero facilis perferendis facere nam! Voluptatum quam aut nemo quae ea sapiente eligendi deserunt.</p>
         </div>
-        <div class="service-three">
+        <div class="service">
             <img src="" alt="">
             <h1>Heading 3</h1>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem cum nesciunt illo nostrum doloribus, recusandae molestias libero facilis perferendis facere nam! Voluptatum quam aut nemo quae ea sapiente eligendi deserunt.</p>
@@ -33,21 +33,39 @@
 </div>
 <div class="customer-section">
     <h1><span class="red-color">Customer's</span> Review</h1>
-    <div class="grid-container">
-        <div class="service-one">
+    <div class="slider"
+    (mousemove)="actionOnMouseMove($event)" 
+    (mousedown)="actionOnMouseDown($event)"
+    (mouseleave)="actionOnMouseLeave($event)"
+    (mouseup)="actionOnMouseUp($event)"
+    (mouseenter)="actionOnMouseEnter($event)">
+        <div class="customer-grid-container">
+        <div class="service">
             <img src="" alt="">
             <h1>Heading 1</h1>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem cum nesciunt illo nostrum doloribus, recusandae molestias libero facilis perferendis facere nam! Voluptatum quam aut nemo quae ea sapiente eligendi deserunt.</p>
         </div>
-        <div class="service-two">
+        <div class="service">
             <img src="" alt="">
             <h1>Heading 2</h1>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem cum nesciunt illo nostrum doloribus, recusandae molestias libero facilis perferendis facere nam! Voluptatum quam aut nemo quae ea sapiente eligendi deserunt.</p>
         </div>
-        <div class="service-three">
+        <div class="service">
             <img src="" alt="">
             <h1>Heading 3</h1>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem cum nesciunt illo nostrum doloribus, recusandae molestias libero facilis perferendis facere nam! Voluptatum quam aut nemo quae ea sapiente eligendi deserunt.</p>
         </div>
+        <div class="service">
+            <img src="" alt="">
+            <h1>Heading 4</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem cum nesciunt illo nostrum doloribus, recusandae molestias libero facilis perferendis facere nam! Voluptatum quam aut nemo quae ea sapiente eligendi deserunt.</p>
+        </div>
+        <div class="service">
+            <img src="" alt="">
+            <h1>Heading 5</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem cum nesciunt illo nostrum doloribus, recusandae molestias libero facilis perferendis facere nam! Voluptatum quam aut nemo quae ea sapiente eligendi deserunt.</p>
+        </div>
     </div>
+    </div>
+    
 </div>
