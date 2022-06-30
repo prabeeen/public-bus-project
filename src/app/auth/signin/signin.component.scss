@@ -2,11 +2,16 @@
     width: 100%;
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: var(--primary-black);
 }
 
-p{
+p,h1{
     color: var(--white);
+}
+
+h1{
+    font-size: 32px;
 }
