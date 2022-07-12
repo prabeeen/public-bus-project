@@ -40,7 +40,8 @@ body{
     min-width: 375px;
     max-width: 1440px;
     min-height: 100vh;
-    margin: 0 auto; 
+    margin: 0 auto;
+    background-color: rgb(235, 232, 232);
 }
 
 p,a{
@@ -76,3 +77,5 @@ a{
     font-family: var(--heading-font);
     font-size: 32px;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

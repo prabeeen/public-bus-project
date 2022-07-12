@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
     <div class="logo-container">
         <a class="logo" routerLink="/">LOGO</a>
     </div>
@@ -14,4 +14,29 @@
         <p>New here?</p>
         <a routerLink="/signup">Sign Up</a>
     </div>
+</div> -->
+
+<div class="signInContainer">
+  <div class="logo-container">
+    <a class="logo" routerLink="/">LOGO</a>
+  </div>
+  <h1>Sign In</h1>
+  <mat-card>
+    <form class="example-form">
+      <mat-form-field class="example-full-width" appearance="fill" [ngStyle]="{'color': 'white'}">
+        <mat-label>Username</mat-label>
+        <input matInput>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput>
+      </mat-form-field>
+
+      <a mat-stroked-button type="button" routerLink="/">Sign In</a>
+    </form>
+  </mat-card>
+  <div class="create-account-container">
+    <p>New here? <a color="primary" routerLink="/signup">Create an account.</a></p>
+  </div>
 </div>
