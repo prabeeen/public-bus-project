@@ -1,0 +1,24 @@
+<div class="nav-container">
+    <ul class="navBar flex">
+      <div class="first-container">
+        <button mat-icon-button type="button" *ngIf="isMenuVisible">
+          <mat-icon>menu</mat-icon>
+        </button>
+          <li><a class="logo" routerLink="/">Logo</a></li>
+      </div>
+        <div class="flex">
+            <li id="signIn" class="hoverBottomEffect"><a routerLink="signin">Sign In</a></li>
+            <li id="signUp" class="hoverBottomEffect"><a routerLink="signup">Sign Up</a></li>
+        </div>
+    </ul>
+</div>
+
+<!-- <p>
+  <mat-toolbar color="primary">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>My App</span>
+    <span class="example-spacer"></span>
+  </mat-toolbar>
+</p> -->

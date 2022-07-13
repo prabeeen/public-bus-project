@@ -14,6 +14,23 @@
     min-width: 375px;
 }
 
+.first-container{
+  display: flex;
+  flex-direction: row;
+
+  button{
+    background-color: transparent;
+  }
+
+  button:hover{
+    cursor: pointer;
+  }
+
+  mat-icon{
+    color: white;
+  }
+}
+
 #signIn{
     margin : 0 24px 0 0;
 }
@@ -41,6 +58,10 @@
 }
 .hoverBottomEffect a:hover::after{
    opacity: 1;
+}
+
+.logo{
+  margin-left: 1rem;
 }
 
 
