@@ -34,11 +34,11 @@
 <div class="customer-section">
     <h1><span class="red-color">Customer's</span> Review</h1>
     <div class="slider"
-    (mousemove)="actionOnMouseMove($event)" 
-    (mousedown)="actionOnMouseDown($event)"
-    (mouseleave)="actionOnMouseLeave($event)"
-    (mouseup)="actionOnMouseUp($event)"
-    (mouseenter)="actionOnMouseEnter($event)">
+    (pointermove)="actionOnPointerMove($event)"
+    (pointerdown)="actionOnPointerDown($event)"
+    (pointerleave)="actionOnPointerLeave($event)"
+    (pointerup)="actionOnPointerUp($event)"
+    (pointerenter)="actionOnPointerEnter($event)">
         <div class="customer-grid-container">
         <div class="service">
             <img src="" alt="">
@@ -67,5 +67,5 @@
         </div>
     </div>
     </div>
-    
+
 </div>
