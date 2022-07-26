@@ -7,10 +7,12 @@ import { SharedModule } from '../shared/shared.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { TrackBusComponent } from './track-bus/track-bus.component';
 
 @NgModule({
   declarations: [
-    PassengerComponent
+    PassengerComponent,
+    TrackBusComponent
   ],
   imports: [
     CommonModule,
