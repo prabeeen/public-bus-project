@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard',
@@ -6,14 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+@Input() sideNavContent: any;
 
-sideNavContent: any = [
-{content:'signin', route: 'signin'},
-{content:'signup', route: 'signup'},
-{content:'admin', route: 'admin'},
-{content:'driver', route: 'driver'},
-{content:'item-5', route: 'item-5'},
-]
+@Input() showHamMenu: boolean = false;
 
   constructor() { }
 
