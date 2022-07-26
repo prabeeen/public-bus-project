@@ -1,7 +1,7 @@
 <div class="nav-container">
     <ul class="navBar flex">
       <div class="first-container">
-        <button mat-icon-button type="button" *ngIf="isMenuVisible">
+        <button mat-icon-button type="button" *ngIf="isMenuVisible" (click)="sideNav?.toggle()">
           <mat-icon>menu</mat-icon>
         </button>
           <li><a class="logo" routerLink="/">Logo</a></li>

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-navbar',
@@ -8,6 +9,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class NavbarComponent implements OnInit {
 
   @Input() isMenuVisible: boolean = false;
+  @Input() sideNav?:MatSidenav;
 
 
   constructor() { }

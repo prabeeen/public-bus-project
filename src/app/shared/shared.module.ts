@@ -22,7 +22,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatToolbarModule
   ],
   exports: [
-    NavbarComponent
+    NavbarComponent,
+    DashboardComponent
   ]
 })
 export class SharedModule { }

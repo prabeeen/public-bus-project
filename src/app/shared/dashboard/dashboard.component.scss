@@ -1,13 +1,26 @@
 mat-sidenav-container{
+  // margin-top: 50px;
   transform: translateY(50px);
-  z-index: -1;
+  // z-index: -1;
 }
 
 mat-sidenav{
-  width: 150px;
-  height: 80vh;
+  padding-top: 50px;
+  width: 15%;
+  height: 92vh;
+  // text-align: center;
 }
 
 mat-sidenav-content{
   height: 92vh;
+}
+
+a{
+  color: black;
+}
+
+@media only screen and (max-width: 768px) {
+  mat-sidenav{
+    width: 30%;
+  }
 }

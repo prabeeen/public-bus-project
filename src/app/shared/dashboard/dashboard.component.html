@@ -1,5 +1,11 @@
-<app-navbar [isMenuVisible]="true"></app-navbar>
-<mat-sidenav-container>
-  <mat-sidenav #matSidenav opened mode="side">Side</mat-sidenav>
-  <mat-sidenav-content>Main</mat-sidenav-content>
-</mat-sidenav-container>
+<app-navbar [isMenuVisible]="true" [sideNav]="matSidenav"></app-navbar>
+<div class="container">
+  <mat-sidenav-container>
+    <mat-sidenav #matSidenav closed mode="side" >
+      <a *ngFor="let contentObj of sideNavContent" [routerLink]="['/'+contentObj.route]">
+        {{contentObj.content}}<br>
+      </a>
+    </mat-sidenav>
+    <mat-sidenav-content><router-outlet></router-outlet></mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
