@@ -1,1 +1,5 @@
-<p>dashboard works!</p>
+<app-navbar [isMenuVisible]="true"></app-navbar>
+<mat-sidenav-container>
+  <mat-sidenav #matSidenav opened mode="side">Side</mat-sidenav>
+  <mat-sidenav-content>Main</mat-sidenav-content>
+</mat-sidenav-container>

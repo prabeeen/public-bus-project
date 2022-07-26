@@ -1,0 +1,13 @@
+mat-sidenav-container{
+  transform: translateY(50px);
+  z-index: -1;
+}
+
+mat-sidenav{
+  width: 150px;
+  height: 80vh;
+}
+
+mat-sidenav-content{
+  height: 92vh;
+}

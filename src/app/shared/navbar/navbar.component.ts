@@ -9,6 +9,7 @@ export class NavbarComponent implements OnInit {
 
   @Input() isMenuVisible: boolean = false;
 
+
   constructor() { }
 
   ngOnInit(): void {
