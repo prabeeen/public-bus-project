@@ -7,11 +7,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { SharedModule } from '../shared/shared.module';
+import { SendGPSComponent } from './send-gps/send-gps.component';
 
 
 @NgModule({
   declarations: [
-    DriverComponent
+    DriverComponent,
+    SendGPSComponent
   ],
   imports: [
     CommonModule,

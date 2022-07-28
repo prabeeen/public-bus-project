@@ -1,12 +1,18 @@
 <app-navbar [isMenuVisible]="true" [sideNav]="matSidenav"></app-navbar>
 <div class="container">
   <mat-sidenav-container>
-    <mat-sidenav #matSidenav closed mode="side" >
-      <a *ngFor="let contentObj of sideNavContent" [routerLink]="['/'+contentObj.route]">
-        {{contentObj.content}}<br>
-      </a>
+    <mat-sidenav #matSidenav closed mode="over" >
+      <div class="sidenavItems" *ngFor="let contentObj of sideNavContent" >
+        <a [routerLink]="[contentObj.route]" (click)="matSidenav.toggle()">
+          <mat-icon style="transform: translateY(5px);">{{contentObj.icon}}</mat-icon>{{contentObj.content}}
+        </a>
+      </div>
     </mat-sidenav>
-    <mat-sidenav-content><router-outlet></router-outlet></mat-sidenav-content>
+    <mat-sidenav-content>
+      <router-outlet>
+      </router-outlet>
+    </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
+
 

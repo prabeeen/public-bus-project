@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MapService } from 'src/app/services/map.service';
 
 @Component({
   selector: 'app-track-bus',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TrackBusComponent implements OnInit {
 
-  constructor() { }
+  constructor(private mapService: MapService) { }
 
   ngOnInit(): void {
+    this.mapService.buildMap();
   }
 
 }

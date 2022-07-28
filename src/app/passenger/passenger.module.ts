@@ -8,11 +8,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TrackBusComponent } from './track-bus/track-bus.component';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
     PassengerComponent,
-    TrackBusComponent
+    TrackBusComponent,
   ],
   imports: [
     CommonModule,
@@ -20,7 +21,8 @@ import { TrackBusComponent } from './track-bus/track-bus.component';
     SharedModule,
     MatIconModule,
     MatSidenavModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatDividerModule,
   ]
 })
 export class PassengerModule { }
