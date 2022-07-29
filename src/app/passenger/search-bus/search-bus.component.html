@@ -1,1 +1,64 @@
-<p>search-bus works!</p>
+<div class="container">
+  <mat-card>
+    <form class="example-form" [formGroup]="searchForm">
+      <mat-form-field>
+        <input
+          placeholder="Source"
+          matInput
+          name="sourceControl"
+          formControlName="sourceControl"
+          [matAutocomplete]="auto1"
+        />
+        <mat-autocomplete #auto1="matAutocomplete">
+          <mat-option
+            *ngFor="let route of filteredSourceRoutes"
+            [value]="route"
+          >
+            {{ route }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          placeholder="Destination"
+          matInput
+          name="destinationControl"
+          formControlName="destinationControl"
+          [matAutocomplete]="auto2"
+        />
+        <mat-autocomplete #auto2="matAutocomplete">
+          <mat-option
+            *ngFor="let route of filteredDestinationRoutes"
+            [value]="route"
+          >
+            {{ route }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <div class="example-button-container">
+        <button
+          [disabled]="!searchForm.valid"
+          mat-mini-fab
+          type="button"
+          color="primary"
+          aria-label="Example icon button with a home icon"
+          (click)="showCards($event)"
+        >
+          <mat-icon>search</mat-icon>
+        </button>
+      </div>
+    </form>
+
+    <div class="expansionCardContainer" *ngIf="toDisplayCard">
+      <mat-expansion-panel *ngFor="let ob of busDetail">
+        <mat-expansion-panel-header>
+          <mat-panel-title> {{ob.title}} </mat-panel-title>
+          <mat-panel-description> {{ob.description}} </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>{{ob.route}}</p>
+      </mat-expansion-panel>
+    </div>
+  </mat-card>
+</div>
