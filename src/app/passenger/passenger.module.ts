@@ -9,11 +9,17 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TrackBusComponent } from './track-bus/track-bus.component';
 import { MatDividerModule } from '@angular/material/divider';
+import { SearchBusComponent } from './search-bus/search-bus.component';
+import { BusProgressComponent } from './bus-progress/bus-progress.component';
+import { PaymentComponent } from './payment/payment.component';
 
 @NgModule({
   declarations: [
     PassengerComponent,
     TrackBusComponent,
+    SearchBusComponent,
+    BusProgressComponent,
+    PaymentComponent,
   ],
   imports: [
     CommonModule,

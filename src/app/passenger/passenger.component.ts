@@ -8,10 +8,10 @@ import { Component, OnInit } from '@angular/core';
 export class PassengerComponent implements OnInit {
 
   sideNavContent:any = [
+    {icon:'search', content:'Search Bus', route: 'searchbus'},
     {icon:'room', content:'Track Bus', route: 'trackbus'},
-    {icon:'', content:'test', route: 'test'},
-    {icon:'', content:'admin', route: 'admin'},
-    {icon:'', content:'driver', route: 'driver'}
+    {icon:'pending', content:'Progress', route: 'progress'},
+    {icon:'payment', content:'Payment', route: 'payment'},
     ]
 
   constructor() { }
