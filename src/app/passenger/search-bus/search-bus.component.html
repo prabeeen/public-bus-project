@@ -57,8 +57,9 @@
           <mat-panel-title> {{ob.title}} </mat-panel-title>
           <mat-panel-description> {{ob.description}} </mat-panel-description>
         </mat-expansion-panel-header>
-        <p>{{ob.route}}</p>
+        <ng-template matExpansionPanelContent><p>{{ob.route}}</p></ng-template>
       </mat-expansion-panel>
     </div>
+
   </mat-card>
 </div>

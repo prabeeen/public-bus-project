@@ -4,31 +4,58 @@
   </div>
   <h1>Sign Up</h1>
   <mat-card>
-    <form class="example-form">
+    <form class="example-form" [formGroup]="signupForm">
       <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Name</mat-label>
-        <input matInput>
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username">
       </mat-form-field>
 
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Email</mat-label>
-        <input matInput>
+        <input type="email" matInput formControlName="email">
       </mat-form-field>
 
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Password</mat-label>
-        <input matInput>
+        <input type="password" matInput formControlName="password">
       </mat-form-field>
 
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Confirm Password</mat-label>
-        <input matInput>
+        <input type="password" matInput formControlName="confirmPassword">
       </mat-form-field>
 
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Phone Number</mat-label>
-        <input type="tel" matInput>
+        <input type="number" matInput formControlName="phone">
       </mat-form-field>
+
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Address</mat-label>
+        <input matInput formControlName="address">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Id Type</mat-label>
+        <mat-select formControlName="idType" #idTypeSelect>
+          <mat-option value="student">Student</mat-option>
+          <mat-option value="senior">Senior</mat-option>
+          <mat-option value="differently_able">Differently able</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="id_container" *ngIf="idTypeSelect.value">
+
+        <button mat-stroked-button color="primary" type="button" (click)="filePicker.click()"><mat-icon>upload</mat-icon>ID card</button>
+        <span style="margin-left: 1rem;" *ngIf="isCorrectExtension else elseBlock">{{imageName}}</span>
+        <ng-template #elseBlock><mat-error>Please select image with (.png, .jpg, .jpeg) extension.</mat-error></ng-template>
+        <input type="file" #filePicker (change)="onFileChange($event)">
+
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Id No.</mat-label>
+          <input type="number" matInput formControlName="idNo">
+        </mat-form-field>
+
+      </div>
 
       <a mat-stroked-button type="button" routerLink="/">Sign Up</a>
     </form>

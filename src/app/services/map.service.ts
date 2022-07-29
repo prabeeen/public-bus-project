@@ -8,11 +8,12 @@ import { SocketService } from './socket.service';
   providedIn: 'root'
 })
 export class MapService {
-
+  // 27.6883814;
+  // 85.3452235;
   map: any;
   title: string = 'angular-map-test';
-  lat: number = 27.6883814;
-  long: number = 85.3452235;
+  lat: number = 27.691799;
+  long: number = 85.357067;
   style: string = 'mapbox://styles/mapbox/streets-v11?optimize=true';
   gpsTest: string = '';
   coord: number[] = [];
