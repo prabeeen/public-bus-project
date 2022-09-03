@@ -58,6 +58,9 @@
           <mat-panel-description> {{ob.description}} </mat-panel-description>
         </mat-expansion-panel-header>
         <ng-template matExpansionPanelContent><p>{{ob.route}}</p></ng-template>
+        <mat-action-row>
+          <button mat-button color="primary" (click)="startTracking($event, ob.title)">Start Tracking</button>
+        </mat-action-row>
       </mat-expansion-panel>
     </div>
 

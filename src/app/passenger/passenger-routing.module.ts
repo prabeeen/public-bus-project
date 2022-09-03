@@ -7,8 +7,10 @@ import { SearchBusComponent } from './search-bus/search-bus.component';
 import { TrackBusComponent } from './track-bus/track-bus.component';
 
 const routes: Routes = [
-  { path: '', component: PassengerComponent,children:[
+  { path: '', component: PassengerComponent ,children:[
+    { path:'', redirectTo:'searchbus', pathMatch: "full"},
     { path: 'trackbus', component: TrackBusComponent},
+    { path: 'trackbus/:busName', component: TrackBusComponent},
     { path: 'searchbus', component: SearchBusComponent},
     { path: 'progress', component: BusProgressComponent},
     { path: 'payment', component: PaymentComponent},

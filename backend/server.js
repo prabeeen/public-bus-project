@@ -12,18 +12,20 @@ app.get('/', (req, res)=>{
 })
 
 io.on("connection", (socket)=>{
-    console.log(socket.id);
-	console.log("connected");
+  // console.log(socket);
+    // console.log(socket.id);
+	// console.log("connected");
+  console.log(socket.id);
     socket.on('sendGPS', (data)=>{
         io.emit('receiveGPS', data);
         console.log(data);
     })
 })
 
-io.on('sendGPS', (message)=>{
-	console.log(message);
+// io.on('sendGPS', (message)=>{
+// 	console.log(message);
 
-})
+// })
 
 server.listen(3001, ()=>{
     console.log("Server running on port 3001....")
