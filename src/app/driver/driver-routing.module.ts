@@ -5,6 +5,7 @@ import { SendGPSComponent } from './send-gps/send-gps.component';
 
 const routes: Routes = [
   { path: '', component: DriverComponent, children:[
+    // {path: '', redirectTo: 'sendgps'},
     {path: 'sendgps', component: SendGPSComponent}
   ] }
 ];

@@ -33,6 +33,26 @@ export class TransferGpsService {
     return false;
   }
 
+  getName(){
+    const name = prompt("What is your name?");
+    if(!name) return '';
+    return name;
+  }
+
+  getInitCoord(){
+    const coordinateString = prompt('place your coordinate');
+    const coordinate = coordinateString?.split(',').map((val)=>{
+      return parseFloat(val)
+    })
+    return coordinate as [number,number];
+  }
+
+  sendNewDriver(driverData:{name:string, initCoord:[number,number]}){
+    this.socketService.emit('new-driver', driverData);
+  }
+
+
+
   sendGPS(){
     let i = 0;
     let timeInterval = setInterval(()=>{

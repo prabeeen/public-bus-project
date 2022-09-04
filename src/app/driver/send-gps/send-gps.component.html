@@ -1,2 +1,15 @@
-<h1 *ngIf="checkGPSAvailability">Fetching Geolocation.....</h1>
-<h1 *ngIf="!checkGPSAvailability">Please Enable Geolocation!</h1>
+<!-- <h1 *ngIf="checkGPSAvailability">Fetching Geolocation.....</h1>
+<h1 *ngIf="!checkGPSAvailability">Please Enable Geolocation!</h1> -->
+
+
+<div class="container">
+  <mat-card>
+    <div>
+      <span>Enable Wake Lock</span><mat-slide-toggle></mat-slide-toggle>
+    </div>
+    <mat-divider></mat-divider>
+    <div>
+      <span>Enable GPS</span><mat-slide-toggle></mat-slide-toggle>
+    </div>
+  </mat-card>
+</div>
