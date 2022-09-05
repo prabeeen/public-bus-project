@@ -21,6 +21,8 @@ export class TrackBusComponent implements OnInit {
       this.mapService.drawRoute(busName);
       this.mapService.getExistingDriver();
       this.mapService.getNewDriver();
+      this.mapService.joinBusRoom(busName);
+      this.mapService.getGPSData();
       this.mapService.checkDriverDisconnect();
     }
   }

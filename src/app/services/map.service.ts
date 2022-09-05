@@ -38,19 +38,21 @@ export class MapService {
       this.map.addControl(new mapboxgl.GeolocateControl({positionOptions: {enableHighAccuracy: true}, trackUserLocation: true, showUserHeading: true}));
       this.map.addControl(new mapboxgl.FullscreenControl());
 
+      // const marker = this.createMarkerOnly()
+      // console.log(marker)
 
-      const marker = this.createMarker([this.long, this.lat])
-      // const marker2 = this.createMarker([85.3117, 27.7006])
 
-
-      // this.socketService.listen('receiveGPS').subscribe((data: any)=>{
-      //     marker.setLngLat([data[0], data[1]]).addTo(this.map);
-      //     // console.log(data)
-      //   })
+      // const marker = this.createMarker([this.long, this.lat])
       }
 
-   private createMarker(longlat:[number,number]){
-    const marker = new mapboxgl.Marker().setLngLat(longlat).addTo(this.map)
+  //  private createMarker(longlat:[number,number]){
+  //   const marker = new mapboxgl.Marker().setLngLat(longlat).addTo(this.map)
+  //   return marker
+  //  }
+
+   private createMarkerOnly(){
+    const marker = new mapboxgl.Marker()
+    console.log(marker)
     return marker
    }
 
@@ -117,15 +119,15 @@ export class MapService {
     this.socketService.listen("new-driver").subscribe((driverVal:any)=>{
       const driverUid:string = driverVal.uid;
       const driverName:string = driverVal.name;
-      const initCoord:[number,number] = driverVal.initCoord;
-      this.updateDataObj(driverUid, driverName, initCoord);
+      this.updateDataObj(driverUid, driverName);
     })
    }
 
-   private updateDataObj(uid: string, name: string, coord: [number,number]){
+   private updateDataObj(uid: string, name: string){
     this.driverObj[uid] = name;
-    const marker = this.createMarker(coord);
+    const marker = this.createMarkerOnly();
     this.markerObj[uid] = marker;
+    // console.log(this.markerObj)
    }
 
    checkDriverDisconnect(){
@@ -133,10 +135,10 @@ export class MapService {
       console.log(`driver disconnect: ${driverUid}`)
       if(this.driverObj[driverUid])
       delete this.driverObj[driverUid]
-      if(this.markerObj[driverUid])
-      this.markerObj[driverUid].remove()
-      if(this.markerObj[driverUid])
-      delete this.markerObj[driverUid]
+      if(this.markerObj[driverUid]){
+        this.markerObj[driverUid].remove()
+        delete this.markerObj[driverUid]
+      }
     })
    }
 
@@ -144,13 +146,26 @@ export class MapService {
     this.socketService.emit('get-driver', '');
     this.socketService.listen('get-driver').subscribe((data:any)=>{
     const entries = Object.entries(data);
+    // console.log(entries)
       entries.map((val:any)=>{
         const driverUid: string = val[0];
-        const driverName: string = val[1][0];
-        const initCoord: [number, number] = val[1][1];
-        this.updateDataObj(driverUid, driverName, initCoord);
+        const driverName: string = val[1];
+        this.updateDataObj(driverUid, driverName);
       })
     })
+   }
+
+   joinBusRoom(busName: string){
+    this.socketService.emit('join-room', busName);
+   }
+
+   getGPSData(){
+    this.socketService.listen('receiveGPS').subscribe((data: any)=>{
+      const uid = data.uid
+      const coordData = data.coordData
+      this.markerObj[uid].setLngLat(coordData).addTo(this.map);
+          // console.log(data)
+        })
    }
 
   }

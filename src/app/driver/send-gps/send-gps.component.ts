@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ThemePalette } from '@angular/material/core';
 import { TransferGpsService } from 'src/app/services/transfer-gps.service';
 @Component({
   selector: 'app-send-gps',
@@ -8,19 +7,38 @@ import { TransferGpsService } from 'src/app/services/transfer-gps.service';
 })
 export class SendGPSComponent implements OnInit {
   checkGPSAvailability: boolean = false;
-  name: string = '';
-  initCoord!: [number,number];
+  checkWakeLockAvailability: boolean = false;
+  busType: string | null = '';
+  name: string | null= '';
+  // initCoord:any;
   constructor(private transferGpsService: TransferGpsService) { }
 
   ngOnInit(): void {
+    this.checkWakeLockAvailability = this.transferGpsService.checkWakeLock();
     this.checkGPSAvailability = this.transferGpsService.checkGPS();
-    // if(this.checkGPSAvailability){
-    //   this.name = this.transferGpsService.getName();
-    //   this.initCoord = this.transferGpsService.getInitCoord();
-    //   this.transferGpsService.sendNewDriver({name:this.name, initCoord: this.initCoord});
-    //   // this.transferGpsService.sendGPS();
-    // }
+    if(this.checkGPSAvailability){
+      this.name = this.transferGpsService.getName();
+      this.busType = this.transferGpsService.getBusType();
+      if(this.name && this.busType)
+      this.transferGpsService.sendNewDriver({name:this.name, busType: this.busType});
+      else
+      alert("Name or BusType is missing!!")
+      }
 
+  }
+
+  wakeLockChanged(e: any, wakeLockToggler:any){
+    if(e.checked)
+    this.transferGpsService.acquireLock(wakeLockToggler)
+    else
+    this.transferGpsService.releaseLock()
+  }
+
+  gpsChanged(e: any){
+    if(!e.checked)
+      this.transferGpsService.noGPS()
+    else
+    this.transferGpsService.sendGPS()
   }
 
 }

@@ -5,11 +5,11 @@
 <div class="container">
   <mat-card>
     <div>
-      <span>Enable Wake Lock</span><mat-slide-toggle></mat-slide-toggle>
+      <span>Enable Wake Lock</span><mat-slide-toggle (change)="wakeLockChanged($event, wakeLockToggle)" [disabled]="!checkWakeLockAvailability" #wakeLockToggle></mat-slide-toggle>
     </div>
     <mat-divider></mat-divider>
     <div>
-      <span>Enable GPS</span><mat-slide-toggle></mat-slide-toggle>
+      <span>Enable GPS</span><mat-slide-toggle (change)="gpsChanged($event)" [disabled]="!checkGPSAvailability"></mat-slide-toggle>
     </div>
   </mat-card>
 </div>

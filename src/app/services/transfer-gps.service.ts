@@ -5,26 +5,113 @@ import { SocketService } from './socket.service';
   providedIn: 'root'
 })
 export class TransferGpsService {
-  coordLocation: number[][] = [
-    [85.3455312249796, 27.68839297956019],
-    [85.3454722034756, 27.688447617949592],
-    [85.34532464971812, 27.688535514430285],
-    [85.34520392391579, 27.688621035262756],
-    [85.34515831638993, 27.688651917769093],
-    [85.34481223575767, 27.688875221786674],
-    [85.34487930564802, 27.688984498053983],
-    [85.34510197767929, 27.689062891830417],
-    [85.34527635939361, 27.689119905451264],
-    [85.3454346443371, 27.689117529882907],
-    [85.34578340776562, 27.68910090091309],
-    [85.34615899915099, 27.689053389556676],
-    [85.34612412280813, 27.689072394101444],
-    [85.34634411204667, 27.689010629317792],
-    [85.34638167118544, 27.68898924919219],
-    [85.34664190235912, 27.6888633439237]
-  ];
+  timeInterval:any;
+  wakeLock:any;
 
-  constructor(private socketService: SocketService) { }
+  coordLocation: number[][] = [
+    [
+      85.34218991268614,
+      27.686747988111193
+    ],
+    [
+      85.34201001860293,
+      27.686521296829383
+    ],
+    [
+      85.3419062335559,
+      27.686331365934123
+    ],
+    [
+      85.3417540154868,
+      27.68620882969779
+    ],
+    [
+      85.34160871642075,
+      27.686025025084746
+    ],
+    [
+      85.34136655130925,
+      27.685920868999787
+    ],
+    [
+      85.34117973822293,
+      27.685755444425666
+    ],
+    [
+      85.34094449211614,
+      27.685473609389433
+    ],
+    [
+      85.34074384102348,
+      27.685210154240494
+    ],
+    [
+      85.34043940488522,
+      27.684879302688415
+    ],
+    [
+      85.3403148628272,
+      27.684769018615384
+    ],
+    [
+      85.33996199366698,
+      27.684879302688415
+    ],
+    [
+      85.3395399344738,
+      27.685075362988286
+    ],
+    [
+      85.3391455512932,
+      27.685210154240494
+    ],
+    [
+      85.33913863229003,
+      27.68529593040553
+    ],
+    [
+      85.33896565721,
+      27.685491989957356
+    ],
+    [
+      85.33853667901366,
+      27.68562065384657
+    ],
+    [
+      85.3381007818142,
+      27.685694176001576
+    ],
+    [
+      85.33830143290533,
+      27.68768538219635
+    ],
+    [
+      85.34219683168931,
+      27.686747988111193
+    ]
+  ]
+
+  constructor(private socketService: SocketService) {}
+
+  checkWakeLock(){
+    if('wakeLock' in navigator) return true;
+    return false;
+  }
+
+  async acquireLock(wakeLockToggler:any){
+    const anyNav: any = navigator;
+    this.wakeLock = await anyNav["wakeLock"].request("screen");
+
+    this.wakeLock.addEventListener('release',()=>{
+      wakeLockToggler.checked='false';
+    })
+  }
+
+  releaseLock(){
+    this.wakeLock.release().then(()=>{
+      console.log("wake lock released");
+    })
+  }
 
   checkGPS(){
     if(navigator.geolocation){
@@ -35,33 +122,31 @@ export class TransferGpsService {
 
   getName(){
     const name = prompt("What is your name?");
-    if(!name) return '';
     return name;
   }
 
-  getInitCoord(){
-    const coordinateString = prompt('place your coordinate');
-    const coordinate = coordinateString?.split(',').map((val)=>{
-      return parseFloat(val)
-    })
-    return coordinate as [number,number];
+  getBusType(){
+    const busType = prompt("Bus Type:");
+    return busType;
   }
 
-  sendNewDriver(driverData:{name:string, initCoord:[number,number]}){
+  sendNewDriver(driverData:{name:string, busType: string}){
     this.socketService.emit('new-driver', driverData);
   }
 
-
+  noGPS(){
+    clearInterval(this.timeInterval);
+    this.socketService.emit('leave-room', '')
+  }
 
   sendGPS(){
     let i = 0;
-    let timeInterval = setInterval(()=>{
+    this.timeInterval = setInterval(()=>{
       if(i === this.coordLocation.length){
-        clearInterval(timeInterval)
+        clearInterval(this.timeInterval)
         return
       }
       this.socketService.emit('sendGPS', this.coordLocation[i])
-      console.log(this.coordLocation[i]);
       i++;
     }, 1000);
   }

@@ -7,7 +7,7 @@ import {io} from 'socket.io-client';
 })
 export class SocketService {
   socket: any;
-  url:string = "http://192.168.1.67:3001"
+  url:string = "http://192.168.1.65:3001"
 
   constructor() {
     this.socket = io(this.url)
@@ -24,4 +24,5 @@ export class SocketService {
   emit(eventName: string, data: any){
     this.socket.emit(eventName, data);
   }
+
 }
