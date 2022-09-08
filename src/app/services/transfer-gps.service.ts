@@ -7,6 +7,7 @@ import { SocketService } from './socket.service';
 export class TransferGpsService {
   timeInterval:any;
   wakeLock:any;
+  gpsId: number = 0;
 
   coordLocation: number[][] = [
     [
@@ -103,7 +104,7 @@ export class TransferGpsService {
     this.wakeLock = await anyNav["wakeLock"].request("screen");
 
     this.wakeLock.addEventListener('release',()=>{
-      wakeLockToggler.checked='false';
+      wakeLockToggler.checked=false;
     })
   }
 
@@ -130,16 +131,23 @@ export class TransferGpsService {
     return busType;
   }
 
-  sendNewDriver(driverData:{name:string, busType: string}){
+  getId(){
+    const id = prompt(" Id: ");
+    return id;
+  }
+
+  sendNewDriver(driverData:{name:string, busType: string, id:string}){
     this.socketService.emit('new-driver', driverData);
   }
 
   noGPS(){
     clearInterval(this.timeInterval);
-    this.socketService.emit('leave-room', '')
+    // navigator.geolocation.clearWatch(this.gpsId);
+    this.socketService.emit('leave-room', '');
   }
 
-  sendGPS(){
+  sendGPS(gpsToggler:any){
+
     let i = 0;
     this.timeInterval = setInterval(()=>{
       if(i === this.coordLocation.length){
@@ -149,5 +157,22 @@ export class TransferGpsService {
       this.socketService.emit('sendGPS', this.coordLocation[i])
       i++;
     }, 1000);
+
+    // this.gpsId = navigator.geolocation.watchPosition(data=>{
+    //   const coordLocation:[number,number] = [data.coords.longitude,data.coords.latitude]
+    //   this.socketService.emit('sendGPS', coordLocation)
+    // },
+    // error =>{
+    //   console.log(error);
+    //   alert(error.message);
+    //   gpsToggler.checked = false;
+    // },
+    // {
+    //   enableHighAccuracy: true,
+    //   timeout: 5000,
+    //   maximumAge: 0
+    // })
   }
+
+
 }

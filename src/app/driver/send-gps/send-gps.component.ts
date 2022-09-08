@@ -10,6 +10,7 @@ export class SendGPSComponent implements OnInit {
   checkWakeLockAvailability: boolean = false;
   busType: string | null = '';
   name: string | null= '';
+  id: string | null = '';
   // initCoord:any;
   constructor(private transferGpsService: TransferGpsService) { }
 
@@ -19,10 +20,11 @@ export class SendGPSComponent implements OnInit {
     if(this.checkGPSAvailability){
       this.name = this.transferGpsService.getName();
       this.busType = this.transferGpsService.getBusType();
-      if(this.name && this.busType)
-      this.transferGpsService.sendNewDriver({name:this.name, busType: this.busType});
+      this.id = this.transferGpsService.getId();
+      if(this.name && this.busType && this.id)
+      this.transferGpsService.sendNewDriver({name:this.name, busType: this.busType, id: this.id});
       else
-      alert("Name or BusType is missing!!")
+      alert("Name or BusType or Id is missing!!")
       }
 
   }
@@ -34,11 +36,12 @@ export class SendGPSComponent implements OnInit {
     this.transferGpsService.releaseLock()
   }
 
-  gpsChanged(e: any){
+  gpsChanged(e: any, gpsToggler:any){
+    console.log(e)
     if(!e.checked)
       this.transferGpsService.noGPS()
     else
-    this.transferGpsService.sendGPS()
+    this.transferGpsService.sendGPS(gpsToggler)
   }
 
 }

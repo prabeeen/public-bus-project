@@ -9,22 +9,30 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class TrackBusComponent implements OnInit {
 
+  busName: string | null = '';
   constructor(private mapService: MapService,
     private activatedRoute: ActivatedRoute,
     ) { }
 
   ngOnInit(): void {
     this.mapService.buildMap();
-    const busName = this.activatedRoute.snapshot.paramMap.get('busName');
-    if(busName)
+    this.busName = this.activatedRoute.snapshot.paramMap.get('busName');
+    if(this.busName)
     {
-      this.mapService.drawRoute(busName);
+      this.mapService.sendBusName(this.busName);
+      this.mapService.drawRoute();
       this.mapService.getExistingDriver();
       this.mapService.getNewDriver();
-      this.mapService.joinBusRoom(busName);
+      this.mapService.joinBusRoom();
+      this.mapService.checkMarkerRemove();
       this.mapService.getGPSData();
       this.mapService.checkDriverDisconnect();
     }
+  }
+
+  boundControl(e:any){
+    if(!this.busName) return;
+    this.mapService.busToCoordinate();
   }
 
 }

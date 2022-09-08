@@ -18,10 +18,13 @@ export class MapService {
   gpsTest: string = '';
   coord: number[] = [];
   geoCoordinate: Array<busCoord> = coordinate_data;
+  busObject!: busCoord[];
+  busName: string = '';
 
   //socket data
   driverObj:any = {};
   markerObj:any = {};
+  markerTosocket: any = {};
 
   constructor(private socketService: SocketService) {}
 
@@ -49,25 +52,82 @@ export class MapService {
   //   const marker = new mapboxgl.Marker().setLngLat(longlat).addTo(this.map)
   //   return marker
   //  }
+  sendBusName(busName:string)
+  {
+    this.busName = busName;
+  }
 
-   private createMarkerOnly(){
-    const marker = new mapboxgl.Marker()
-    console.log(marker)
+   private createMarkerOnly(id:string){
+    console.log(`createMarkerOnly Id:${id}`)
+    const marker = new mapboxgl.Marker();
+    const markerHtml = marker.getElement();
+    markerHtml.addEventListener('mouseenter', () => {
+      markerHtml.style.cursor = 'pointer';
+      })
+    markerHtml.addEventListener('mouseleave', () => {
+      markerHtml.style.cursor = '';
+      })
+
+      markerHtml.addEventListener('click',()=>{
+        const popup = this.createPopupOnly(id);
+        popup.setHTML(`<p>Id: ${id}</p>`);
+        marker.setPopup(popup);
+      })
+
+
+      let dblclickCounter = 0;
+      markerHtml.addEventListener('dblclick',(e:MouseEvent)=>{
+        e.stopPropagation();
+        if(dblclickCounter > 0){
+          console.log('dblClick only')
+        }
+        else{
+
+          const requiredDriverId = this.markerTosocket[id]
+          console.log(this.markerTosocket,id,this.busName,requiredDriverId)
+          this.socketService.emit('private-connection', [this.busName,requiredDriverId])
+          const driverUids = Object.keys(this.driverObj)
+          driverUids.map(driverUid=>{
+            if(driverUid!==requiredDriverId)
+            {
+              delete this.driverObj[driverUid]
+              const driverId = this.markerObj[driverUid][1]
+              console.log(`driverId to be deleted: ${driverId}`)
+              this.markerObj[driverUid][0].remove()
+              delete this.markerObj[driverUid]
+              delete this.markerTosocket[driverId]
+
+            }
+          })
+          console.log(this.driverObj, this.markerObj, this.markerTosocket, requiredDriverId)
+        }
+        dblclickCounter++;
+      })
+
     return marker
    }
 
-   drawRoute(busName: string){
-    const sourceName = busName+'route';
-    const busObject = this.geoCoordinate.filter((busCoord)=>{
-      return busCoord.bus == busName;
+   private createPopupOnly(id:string){
+    const popup = new mapboxgl.Popup()
+    return popup
+   }
+
+   drawRoute(){
+    const sourceName = this.busName+'route';
+    this.busObject = this.geoCoordinate.filter((busCoord)=>{
+      return busCoord.bus == this.busName;
     })
 
     this.map.on('load', () => {
-      this.createLineSource(sourceName, busObject[0].coord);
+      this.createLineSource(sourceName, this.busObject[0].coord);
       this.addLineSource(sourceName);
-      this.createBounds(busObject[0].coord);
+      this.createBounds(this.busObject[0].coord);
     });
 
+   }
+
+   busToCoordinate(){
+    this.createBounds(this.busObject[0].coord);
    }
 
    private createBounds(coords:number[][]){
@@ -119,26 +179,36 @@ export class MapService {
     this.socketService.listen("new-driver").subscribe((driverVal:any)=>{
       const driverUid:string = driverVal.uid;
       const driverName:string = driverVal.name;
-      this.updateDataObj(driverUid, driverName);
+      const busId: string = driverVal.id;
+      this.updateDataObj(driverUid, driverName, busId);
     })
    }
 
-   private updateDataObj(uid: string, name: string){
+   private updateDataObj(uid: string, name: string, id: string){
+    console.log(`updating all data in map: ${uid}, ${name}, ${id}`)
     this.driverObj[uid] = name;
-    const marker = this.createMarkerOnly();
-    this.markerObj[uid] = marker;
+    const marker = this.createMarkerOnly(id);
+    this.markerObj[uid] = [marker, id];
+    this.markerTosocket[id] = uid;
     // console.log(this.markerObj)
+    console.log(`markerObj : ${this.markerObj}, markerTosocket: ${this.markerTosocket}`)
    }
 
    checkDriverDisconnect(){
     this.socketService.listen("driver-disconnect").subscribe((driverUid:any)=>{
+      const id:number = this.markerObj[driverUid][1]
       console.log(`driver disconnect: ${driverUid}`)
       if(this.driverObj[driverUid])
       delete this.driverObj[driverUid]
       if(this.markerObj[driverUid]){
-        this.markerObj[driverUid].remove()
+        this.markerObj[driverUid][0].remove()
         delete this.markerObj[driverUid]
       }
+      if(this.markerTosocket[id])
+      {
+        delete this.markerTosocket[id]
+      }
+      // console.log(this.markerObj, this.markerTosocket)
     })
    }
 
@@ -149,21 +219,30 @@ export class MapService {
     // console.log(entries)
       entries.map((val:any)=>{
         const driverUid: string = val[0];
-        const driverName: string = val[1];
-        this.updateDataObj(driverUid, driverName);
+        const driverName: string = val[1][0];
+        const busId: string = val[1][1];
+        this.updateDataObj(driverUid, driverName, busId);
       })
     })
    }
 
-   joinBusRoom(busName: string){
-    this.socketService.emit('join-room', busName);
+   joinBusRoom(){
+    this.socketService.emit('join-room', this.busName);
+   }
+
+   checkMarkerRemove(){
+    this.socketService.listen('remove-marker').subscribe((driverUid: any)=>{
+      console.log("checkMarkerRemove reached.")
+      console.log(`marker to remove ${this.markerObj[driverUid]}`)
+      this.markerObj[driverUid][0].remove();
+    })
    }
 
    getGPSData(){
     this.socketService.listen('receiveGPS').subscribe((data: any)=>{
       const uid = data.uid
       const coordData = data.coordData
-      this.markerObj[uid].setLngLat(coordData).addTo(this.map);
+      this.markerObj[uid][0].setLngLat(coordData).addTo(this.map);
           // console.log(data)
         })
    }

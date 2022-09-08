@@ -1,1 +1,32 @@
-<p>payment works!</p>
+<div class="paymentContainer">
+  <mat-card>
+    <form class="example-form" [formGroup]="paymentForm">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Amount</mat-label>
+      <input matInput type="number" formControlName="amount">
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Bus Id</mat-label>
+      <input matInput formControlName="busId">
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Bus Name</mat-label>
+      <input matInput formControlName="busName">
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Customer Name</mat-label>
+      <input matInput formControlName="customerName">
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email">
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Phone</mat-label>
+      <input matInput type="phone" formControlName="phone">
+    </mat-form-field>
+
+    <a mat-stroked-button type="button" (click)="makePayment($event)">Make Payment</a>
+  </form>
+  </mat-card>
+</div>

@@ -9,7 +9,7 @@
     </div>
     <mat-divider></mat-divider>
     <div>
-      <span>Enable GPS</span><mat-slide-toggle (change)="gpsChanged($event)" [disabled]="!checkGPSAvailability"></mat-slide-toggle>
+      <span>Enable GPS</span><mat-slide-toggle (change)="gpsChanged($event, gpsToggle)" [disabled]="!checkGPSAvailability" #gpsToggle></mat-slide-toggle>
     </div>
   </mat-card>
 </div>
