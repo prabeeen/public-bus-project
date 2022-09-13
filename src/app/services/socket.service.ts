@@ -7,7 +7,7 @@ import {io} from 'socket.io-client';
 })
 export class SocketService {
   socket: any;
-  url:string = "http://192.168.1.67:3001"
+  url:string = "http://192.168.1.3:3001" // <-- CHANGE / UPDATE THIS: Change to your IP address
 
   constructor() {
     this.socket = io(this.url)

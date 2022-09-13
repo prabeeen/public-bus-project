@@ -109,5 +109,8 @@
       }
     }
   },
-  "defaultProject": "publicBusProject"
+  "defaultProject": "publicBusProject",
+  "cli": {
+    "analytics": false
+  }
 }
