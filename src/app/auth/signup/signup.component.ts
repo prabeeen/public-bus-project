@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { UserInterface } from 'src/app/interface/users';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -7,11 +10,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent implements OnInit {
+  isPasswordMatch: boolean = true;
   selectedFile: any;
   signupForm!: FormGroup;
   imageName: string = '';
   isCorrectExtension: boolean = true;
-  constructor() { }
+  constructor(private router: Router, public authService: AuthService) { }
 
   ngOnInit(): void {
     this.signupForm = new FormGroup({
@@ -25,6 +29,28 @@ export class SignupComponent implements OnInit {
       idImage: new FormControl(null),
       idNo: new FormControl(null)
     })
+  }
+
+  onSignUp(){
+    if( this.signupForm.get('password')?.value !== this.signupForm.get('confirmPassword')?.value){
+      this.isPasswordMatch = false;
+      return
+    }
+    if(!this.signupForm.valid){
+      return
+    }
+    const user: any = {
+      username: this.signupForm.get('username')?.value,
+      email: this.signupForm.get('email')?.value,
+      password: this.signupForm.get('password')?.value,
+      phone: this.signupForm.get('phone')?.value,
+      address: this.signupForm.get('address')?.value,
+      idType: this.signupForm.get('idType')?.value,
+      idImage: this.signupForm.get('idImage')?.value,
+      idNo: this.signupForm.get('idNo')?.value
+    }
+    this.authService.signupUser(user);
+    this.signupForm.reset();
   }
 
   onFileChange(e: Event){

@@ -4,18 +4,20 @@
   </div>
   <h1>Sign In</h1>
   <mat-card>
-    <form class="example-form">
-      <mat-form-field class="example-full-width" appearance="fill" [ngStyle]="{'color': 'white'}">
-        <mat-label>Username</mat-label>
-        <input matInput>
+    <form class="example-form" [formGroup]="signInForm">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput formControlName="email">
       </mat-form-field>
+      <p [ngStyle]="{color: 'red'}" *ngIf="signInForm.get('email')?.touched && !signInForm.get('email')?.valid">Email Required</p>
 
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Password</mat-label>
-        <input matInput>
+        <input matInput type="password" formControlName="password">
       </mat-form-field>
+      <p [ngStyle]="{color: 'red'}" *ngIf="signInForm.get('password')?.touched && !signInForm.get('password')?.valid">Password Required</p>
 
-      <a mat-stroked-button type="button" routerLink="/passenger">Sign In</a>
+      <button mat-stroked-button type="button" (click)="onSignIn()" [disabled]="!signInForm.valid">Sign In</button>
     </form>
   </mat-card>
   <div class="create-account-container">

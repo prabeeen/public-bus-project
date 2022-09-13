@@ -30,10 +30,10 @@ h1{
     width: 45%;
     margin-top: .5rem;
 
-    form, mat-form-field, input, a{
+    form, mat-form-field, input, a, button{
       width: 100%;
     }
-    a{
+    a, button{
       background-color: #379B5C;
       color: var(--white);
     }

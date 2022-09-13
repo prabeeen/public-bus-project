@@ -16,7 +16,7 @@ export class PaymentComponent implements OnInit {
   ngOnInit(): void {
 
     this.paymentForm = new FormGroup({
-      amount: new FormControl(null, {validators: [Validators.required, Validators.minLength(4)]}),
+      amount: new FormControl(null, {validators: [Validators.required]}),
       busId: new FormControl(null, {validators: [Validators.required]}),
       busName: new FormControl(null, {validators: [Validators.required]}),
       customerName: new FormControl(null, {validators: [Validators.required]}),
@@ -27,6 +27,9 @@ export class PaymentComponent implements OnInit {
   }
 
   makePayment(e: any){
+    if(!this.paymentForm.valid){
+      return
+    }
     this.paymentService.performPayment(this.paymentForm)
   }
 

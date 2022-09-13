@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
@@ -10,6 +10,8 @@ export class NavbarComponent implements OnInit {
 
   @Input() isMenuVisible: boolean = false;
   @Input() sideNav?:MatSidenav;
+  @Input() userIsAuthenticated: boolean = false;
+  @Output() onLogOut = new EventEmitter();
 
 
   constructor() { }

@@ -7,8 +7,9 @@
           <li><a class="logo" routerLink="/">Logo</a></li>
       </div>
         <div class="flex">
-            <li id="signIn" class="hoverBottomEffect"><a routerLink="/signin">Sign In</a></li>
-            <li id="signUp" class="hoverBottomEffect"><a routerLink="/signup">Sign Up</a></li>
+            <li id="signIn" class="hoverBottomEffect" *ngIf="!userIsAuthenticated"><a routerLink="/signin" >Sign In</a></li>
+            <li id="signUp" class="hoverBottomEffect" *ngIf="!userIsAuthenticated"><a routerLink="/signup">Sign Up</a></li>
+            <li id="logout" class="hoverBottomEffect" *ngIf="userIsAuthenticated" (click)="onLogOut.emit('clicked')"><a type="button" id="anchorButton">Log Out</a></li>
         </div>
     </ul>
 </div>

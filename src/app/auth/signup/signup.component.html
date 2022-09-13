@@ -6,34 +6,44 @@
   <mat-card>
     <form class="example-form" [formGroup]="signupForm">
       <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Username</mat-label>
+        <mat-label>Username*</mat-label>
         <input matInput formControlName="username">
       </mat-form-field>
+     <p [ngStyle]="{color: 'red'}" *ngIf="signupForm.get('username')?.touched && signupForm.get('username')?.errors?.required">Username Required</p>
+      <p [ngStyle]="{color: 'red'}" *ngIf="signupForm.get('username')?.errors?.minlength">Username must be at least 3 characters.</p>
 
       <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Email</mat-label>
+        <mat-label>Email*</mat-label>
         <input type="email" matInput formControlName="email">
       </mat-form-field>
+      <p [ngStyle]="{color: 'red'}" *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.errors?.required">Email Required</p>
+      <p [ngStyle]="{color: 'red'}" *ngIf="signupForm.get('email')?.errors?.email">Invalid Email</p>
 
       <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Password</mat-label>
+        <mat-label>Password*</mat-label>
         <input type="password" matInput formControlName="password">
       </mat-form-field>
+      <p [ngStyle]="{color: 'red'}" *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.errors?.required">Password Required</p>
 
       <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Confirm Password</mat-label>
+        <mat-label>Confirm Password*</mat-label>
         <input type="password" matInput formControlName="confirmPassword">
       </mat-form-field>
+      <p [ngStyle]="{color: 'red'}" *ngIf="signupForm.get('confirmPassword')?.touched && signupForm.get('confirmPassword')?.errors?.required">Confirm Password Required</p>
+      <p [ngStyle]="{color: 'red'}" *ngIf="!isPasswordMatch">Your password and confirm password do not match.</p>
 
       <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Phone Number</mat-label>
+        <mat-label>Phone Number*</mat-label>
         <input type="number" matInput formControlName="phone">
       </mat-form-field>
+      <p [ngStyle]="{color: 'red'}" *ngIf="signupForm.get('phone')?.touched && signupForm.get('phone')?.errors?.required">Phone Required</p>
+      <p [ngStyle]="{color: 'red'}" *ngIf="signupForm.get('phone')?.errors?.minlength && signupForm.get('phone')?.errors?.maxlength ">Phone should be of 10 number</p>
 
       <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Address</mat-label>
+        <mat-label>Address*</mat-label>
         <input matInput formControlName="address">
       </mat-form-field>
+      <p [ngStyle]="{color: 'red'}" *ngIf="signupForm.get('address')?.touched && signupForm.get('address')?.errors?.required">Address Required</p>
 
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Id Type</mat-label>
@@ -57,8 +67,12 @@
 
       </div>
 
-      <a mat-stroked-button type="button" routerLink="/">Sign Up</a>
+      <button mat-stroked-button type="button" id="signupbutton" (click)="onSignUp()" [disabled]="!signupForm.valid" >Sign Up</button>
+
     </form>
   </mat-card>
+</div>
+<div>
+  <img [src]="authService.imagePath" alt="">
 </div>
 

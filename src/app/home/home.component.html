@@ -1,4 +1,4 @@
-<app-navbar [isMenuVisible]="false"></app-navbar>
+<app-navbar [isMenuVisible]="false" [userIsAuthenticated]="userIsAuthenticated" (onLogOut)="onLogOut($event)"></app-navbar>
 <app-main></app-main>
 <app-footer></app-footer>
 

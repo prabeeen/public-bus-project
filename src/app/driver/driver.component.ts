@@ -7,10 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DriverComponent implements OnInit {
   sideNavContent:any = [
-    {content:'signin', route: 'signin'},
-    {content:'signup', route: 'signup'},
-    {content:'admin', route: 'admin'},
-    {content:'driver', route: 'driver'}
+    {content:'send location', route: 'driver'}
     ]
   constructor() { }
 

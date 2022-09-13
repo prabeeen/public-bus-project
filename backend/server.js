@@ -1,23 +1,50 @@
 const express = require('express');
+const path = require("path")
 const app = express();
 const cors = require('cors')
 const server = require('http').createServer(app);
+const mongoose = require('mongoose')
+const usersRoutes = require('./routes/users')
+const paymentsRoutes = require('./routes/payments')
+// const bodyParser = require("body-parser");
+
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
+
+app.use('/images',express.static(__dirname + '/images/'))
+console.log(path.join(__dirname,'images'))
+
 const driverObject = {};
 const roomObject = {};
+
+app.use(cors({
+  origin: "http://localhost:4200"
+}));
+app.use(express.json())
+
+
+mongoose.connect("mongodb+srv://prabin171342:2dQKZ1t9eau4jwk6@cluster0.wkgme8i.mongodb.net/?retryWrites=true&w=majority")
+.then(()=>{
+  console.log("database connected")
+})
+.catch((error)=>{
+  console.log("failed to connect to database")
+});
+
+
+app.get('/', (req, res)=>{
+  res.send('<h1>Hello world Welcome</h1>')
+})
+
+
+app.use('/api/users', usersRoutes);
+app.use('/api/payment', paymentsRoutes);
+
 
 const io = require('socket.io')(server, {
     cors: {
         origin: "*"
     }
-})
-app.use(cors({
-  origin: "http://localhost:4200"
-}));
-
-app.use(express.json())
-
-app.get('/', (req, res)=>{
-    res.send('<h1>Hello world Welcome</h1>')
 })
 
 io.on("connection", (socket)=>{
@@ -76,17 +103,6 @@ io.on("connection", (socket)=>{
       delete driverObject[socket.id];
     })
 })
-
-
-
-app.post('/api/payment',(req, res)=>{
-const paymentData = req.body;
-console.log(paymentData);
-res.send('<h1>successful</h1>');
-})
-
-
-
 
 
 server.listen(3001, ()=>{
