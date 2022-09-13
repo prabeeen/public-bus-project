@@ -6,6 +6,7 @@ const server = require('http').createServer(app);
 const mongoose = require('mongoose')
 const usersRoutes = require('./routes/users')
 const paymentsRoutes = require('./routes/payments')
+const adminRoutes = require('./routes/admin')
 // const bodyParser = require("body-parser");
 
 // app.use(bodyParser.urlencoded({ extended: false }));
@@ -39,6 +40,7 @@ app.get('/', (req, res)=>{
 
 app.use('/api/users', usersRoutes);
 app.use('/api/payment', paymentsRoutes);
+app.use('/api/admin', adminRoutes);
 
 
 const io = require('socket.io')(server, {

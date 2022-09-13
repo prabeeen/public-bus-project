@@ -2,20 +2,27 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private token: any;
-  baseUrl: string = 'http://localhost:3001'
+  private baseUrl: string = environment.baseUrl;
   imagePath: string = ''
   private authStatusListener = new Subject<boolean>();
   private isAuthenticated: boolean = false;
   private tokenTimer: any;
+  private appUser: string = '';
+
+  horizontalPosition: MatSnackBarHorizontalPosition = "start";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+  dismissTimeSec: number = 2;
 
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) { }
 
   getToken(){
     return this.token;
@@ -29,23 +36,69 @@ export class AuthService {
     return this.authStatusListener.asObservable();
   }
 
-  authenticateUser(email:string, password: string){
-    this.http.post(this.baseUrl+'/api/users/login',{email: email, password: password}).subscribe((response:any)=>{
-      const token = response.token;
-      this.token = token;
-      if(token){
-        const expiresInDuration = response.expiresIn;
-        this.setAuthTimer(expiresInDuration)
-        this.isAuthenticated = true;
-        this.authStatusListener.next(true);
-        const now = new Date();
-        const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-        this.saveAuthData(token, expirationDate)
-        console.log(expirationDate)
-        this.router.navigate(['/passenger']);
-      }
-    })
+  getAppUser(){
+    return this.appUser;
+  }
 
+  authenticateUser(email:string, password: string){
+    if(email.split('_')[0].toLowerCase() === 'driver'){
+      this.http.post(this.baseUrl+'/api/admin/driver-login',{email: email.split("_")[1], password: password}).subscribe((response:any)=>{
+        const token = response.token;
+        this.token = token;
+        if(token){
+          const expiresInDuration = response.expiresIn;
+          this.appUser = 'driver'
+          this.setAuthTimer(expiresInDuration)
+          this.isAuthenticated = true;
+          this.authStatusListener.next(true);
+          const now = new Date();
+          const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
+          this.saveAuthData(token, expirationDate, this.appUser)
+          console.log(expirationDate)
+          this.router.navigate(['/driver']);
+          this.showSnackBar('Authentication Successful!')
+        }
+      })
+    }
+    else if(email.split('_')[0].toLowerCase() === 'admin'){
+      this.http.post(this.baseUrl+'/api/admin/admin-login',{email: email.split("_")[1], password: password}).subscribe((response:any)=>{
+        const token = response.token;
+        this.token = token;
+        if(token){
+          const expiresInDuration = response.expiresIn;
+          this.appUser = 'admin'
+          this.setAuthTimer(expiresInDuration)
+          this.isAuthenticated = true;
+          this.authStatusListener.next(true);
+          const now = new Date();
+          const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
+          this.saveAuthData(token, expirationDate, this.appUser)
+          console.log(expirationDate)
+          this.router.navigate(['/admin']);
+          this.showSnackBar('Authentication Successful!')
+        }
+      })
+
+    }
+    else{
+      this.http.post(this.baseUrl+'/api/users/login',{email: email, password: password}).subscribe((response:any)=>{
+        const token = response.token;
+        this.token = token;
+        if(token){
+          const expiresInDuration = response.expiresIn;
+          this.appUser = 'passenger'
+          this.setAuthTimer(expiresInDuration)
+          this.isAuthenticated = true;
+          this.authStatusListener.next(true);
+          const now = new Date();
+          const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
+          this.saveAuthData(token, expirationDate, this.appUser)
+          console.log(expirationDate)
+          this.router.navigate(['/passenger']);
+          this.showSnackBar('Authentication Successful!')
+        }
+      })
+    }
   }
 
   logout(){
@@ -104,6 +157,7 @@ export class AuthService {
     console.log(expiresIn)
     if(expiresIn > 0){
       this.token = authInfo.token;
+      this.appUser = authInfo.appUser;
       this.isAuthenticated = true;
       this.authStatusListener.next(true);
       this.setAuthTimer(expiresIn / 1000);
@@ -122,23 +176,38 @@ export class AuthService {
   private getAuthData(){
     const token = localStorage.getItem("token")
     const expirationDate = localStorage.getItem("expiration")
-    console.log(token, expirationDate)
-    if(!token || !expirationDate){
+    const appUser = localStorage.getItem("appUser")
+    if(!token || !expirationDate || !appUser){
       return
     }
     return {
       token: token,
-      expirationDate: new Date(expirationDate)
+      expirationDate: new Date(expirationDate),
+      appUser: appUser
+
     }
   }
 
-  private saveAuthData(token: string, expirationDate: Date){
+  private saveAuthData(token: string, expirationDate: Date, appUser: string){
     localStorage.setItem("token", token);
     localStorage.setItem("expiration", expirationDate.toISOString())
+    localStorage.setItem("appUser", appUser)
   }
 
   private clearAuthData(){
     localStorage.removeItem("token");
     localStorage.removeItem("expiration");
+    localStorage.removeItem("appUser");
+  }
+
+
+  private showSnackBar(message: string){
+      this.snackBar.open(message, 'close',{
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      })
+      setTimeout(()=>{
+        this.snackBar.dismiss()
+      }, this.dismissTimeSec * 1000)
   }
 }

@@ -5,7 +5,6 @@ const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken")
 
 const User = require("../model/user");
-const user = require("../model/user");
 
 const MIME_TYPE_MAP = {
   'image/png': 'png',
@@ -121,7 +120,8 @@ router.post("/login", (req, res, next)=>{
       result: false,
       message: "Invalid Authentication Credentials!"
     })
-  })
+  });
+
 })
 
 module.exports = router

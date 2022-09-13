@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
-// import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signin',
@@ -12,14 +10,9 @@ import { Router } from '@angular/router';
 export class SigninComponent implements OnInit {
 
   signInForm!: FormGroup;
-  // horizontalPosition: MatSnackBarHorizontalPosition = "start";
-  // verticalPosition: MatSnackBarVerticalPosition = "bottom";
-  dismissTimeSec: number = 2;
 
-  constructor(private authService: AuthService
-    //  private snackBar: MatSnackBar,
-    //  private router: Router
-     ) { }
+
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
 
@@ -38,25 +31,7 @@ export class SigninComponent implements OnInit {
       this.signInForm.controls.email.value,
       this.signInForm.controls.password.value
       )
-    // if(result){
-    //   this.snackBar.open(result.message, 'close',{
-    //     horizontalPosition: this.horizontalPosition,
-    //     verticalPosition: this.verticalPosition,
-    //   });
-    //   setTimeout(()=>{
-    //     this.snackBar.dismiss()
-    //   }, this.dismissTimeSec * 1000)
-    //   this.router.navigate(['/passenger']);
-    //   return
-    // }
-    // this.snackBar.open(result.message, 'close',{
-    //   horizontalPosition: this.horizontalPosition,
-    //   verticalPosition: this.verticalPosition,
 
-    // })
-    // setTimeout(()=>{
-    //   this.snackBar.dismiss()
-    // }, this.dismissTimeSec * 1000)
   }
 
 }

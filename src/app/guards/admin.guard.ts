@@ -6,21 +6,21 @@ import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivateChild {
+export class AdminGuard implements CanActivateChild {
   constructor(private authService: AuthService, private router: Router){}
   canActivateChild(
     childRoute: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       const isAuth = this.authService.getIsAuth();
       const appUser = this.authService.getAppUser();
-      let isPassenger: boolean = false;
-      if(appUser === 'passenger'){
-        isPassenger = true;
+      let isAdmin: boolean = false;
+      if(appUser === 'admin'){
+        isAdmin = true;
       }
-      if (!isAuth || !isPassenger){
+      if (!isAuth || !isAdmin){
         this.router.navigate(['/signin'])
       }
-    return (isAuth && isPassenger);
+    return (isAuth && isAdmin);
   }
 
 }

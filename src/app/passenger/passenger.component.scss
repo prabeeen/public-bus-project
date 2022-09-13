@@ -7,7 +7,7 @@ mat-sidenav-container{
 mat-sidenav{
   background-color: black;
   padding: 50px 0 0 1%;
-  width: 13%;
+  width: 15%;
   height: 92vh;
 }
 
@@ -19,6 +19,7 @@ mat-sidenav-content{
 .sidenavItems{
   padding: 5px;
   border-bottom: .5px solid rgba(155, 155, 155, .3);
+  text-align: center;
 }
 
 mat-icon{

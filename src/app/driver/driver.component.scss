@@ -4,19 +4,38 @@ mat-sidenav-container{
   // z-index: -1;
 }
 
+// *{
+//   overflow: hidden;
+// }
+
+.mat-drawer-inner-container{
+  overflow: hidden !important;
+}
 mat-sidenav{
-  padding-top: 50px;
+  background-color: black;
+  padding: 50px 0 0 1%;
   width: 15%;
-  height: 92vh;
-  // text-align: center;
+  height: 98vh;
+
 }
 
 mat-sidenav-content{
   height: 92vh;
 }
 
+.sidenavItems{
+  padding: 5px;
+  border-bottom: .5px solid rgba(155, 155, 155, .3);
+  text-align: center;
+}
+
+mat-icon{
+  margin-right: 10px;
+}
+
 a{
-  color: black;
+  color: white;
+  font-weight: normal;
 }
 
 @media only screen and (max-width: 768px) {
