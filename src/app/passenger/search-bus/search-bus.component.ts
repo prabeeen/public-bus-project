@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { map, startWith} from 'rxjs/operators';
 import {Router} from '@angular/router'
+import { MapService } from 'src/app/services/map.service';
 
 interface busDetails {
   title: string;
@@ -39,7 +40,7 @@ export class SearchBusComponent implements OnInit, OnDestroy {
   toDisplayCard: boolean = false
 
 
-  constructor(private router:Router) { }
+  constructor(private router:Router, private mapService: MapService) { }
 
   ngOnInit(): void {
     this.searchForm = new FormGroup({
@@ -78,7 +79,9 @@ export class SearchBusComponent implements OnInit, OnDestroy {
   }
 
   startTracking(e:any, busTitle:string){
-    this.router.navigate(['/passenger','trackbus', busTitle])
+    this.router.navigate(['/passenger','trackbus'])
+    this.mapService.trackBusType = busTitle;
+    this.mapService.setBusTrackType(busTitle);
   }
 
   ngOnDestroy(): void {

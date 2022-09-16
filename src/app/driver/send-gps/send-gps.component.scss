@@ -18,6 +18,12 @@
     }
   }
 
+  .buttonContainer{
+    position: absolute;
+    bottom: 40px;
+    right: 80px;
+  }
+
   // span{
   //   margin-right: 60%;
   //   margin-left: 3%;
@@ -32,5 +38,11 @@
       mat-card{
         width: 90%;
       }
+
+    }
+
+    .buttonContainer{
+      bottom: 60px;
+      right: 30px;
     }
   }

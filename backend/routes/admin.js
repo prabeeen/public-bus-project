@@ -75,6 +75,7 @@ router.post('/driver-login', (req, res, next)=>{
         user: "driver",
         result: true,
         token: token,
+        userId: fetchedDriver._id,
         expiresIn: 3600
       })
   }).catch(err=>{
@@ -113,6 +114,7 @@ router.post('/admin-login', (req, res, next)=>{
       )
       res.status(200).json({
         user: "admin",
+        userId: fetchedAdmin._id,
         result: true,
         token: token,
         expiresIn: 3600

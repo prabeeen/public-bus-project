@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MapService } from 'src/app/services/map.service';
 
 @Component({
   selector: 'app-bus-progress',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BusProgressComponent implements OnInit {
 
-  constructor() { }
+  constructor(private mapService: MapService) { }
 
   ngOnInit(): void {
   }

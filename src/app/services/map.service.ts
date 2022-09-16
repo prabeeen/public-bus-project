@@ -20,6 +20,8 @@ export class MapService {
   geoCoordinate: Array<busCoord> = coordinate_data;
   busObject!: busCoord[];
   busName: string = '';
+  trackBusType: string | null = null;
+  privateDriverId: string | null = null;
 
   //socket data
   driverObj:any = {};
@@ -52,13 +54,32 @@ export class MapService {
   //   const marker = new mapboxgl.Marker().setLngLat(longlat).addTo(this.map)
   //   return marker
   //  }
+
+  setBusTrackType(busType: string){
+    localStorage.setItem("busType", busType)
+  }
+
+  getBusTrackType(){
+    this.trackBusType = localStorage.getItem("busType")
+  }
   sendBusName(busName:string)
   {
     this.busName = busName;
   }
 
+  removeBusType(){
+    localStorage.removeItem("busType");
+    this.trackBusType = null;
+  }
+
+  leavePrivateRoom(){
+    console.log(`leave private connection with ${this.privateDriverId}`)
+    this.socketService.emit('leave-private', this.privateDriverId)
+    this.privateDriverId = null;
+  }
+
    private createMarkerOnly(id:string){
-    console.log(`createMarkerOnly Id:${id}`)
+    // console.log(`createMarkerOnly Id:${id}`)
     const marker = new mapboxgl.Marker();
     const markerHtml = marker.getElement();
     markerHtml.addEventListener('mouseenter', () => {
@@ -84,7 +105,8 @@ export class MapService {
         else{
 
           const requiredDriverId = this.markerTosocket[id]
-          console.log(this.markerTosocket,id,this.busName,requiredDriverId)
+          // console.log(this.markerTosocket,id,this.busName,requiredDriverId)
+          this.privateDriverId = requiredDriverId
           this.socketService.emit('private-connection', [this.busName,requiredDriverId])
           const driverUids = Object.keys(this.driverObj)
           driverUids.map(driverUid=>{
@@ -99,7 +121,7 @@ export class MapService {
 
             }
           })
-          console.log(this.driverObj, this.markerObj, this.markerTosocket, requiredDriverId)
+          // console.log(this.driverObj, this.markerObj, this.markerTosocket, requiredDriverId)
         }
         dblclickCounter++;
       })
@@ -185,13 +207,13 @@ export class MapService {
    }
 
    private updateDataObj(uid: string, name: string, id: string){
-    console.log(`updating all data in map: ${uid}, ${name}, ${id}`)
+    // console.log(`updating all data in map: ${uid}, ${name}, ${id}`)
     this.driverObj[uid] = name;
     const marker = this.createMarkerOnly(id);
     this.markerObj[uid] = [marker, id];
     this.markerTosocket[id] = uid;
     // console.log(this.markerObj)
-    console.log(`markerObj : ${this.markerObj}, markerTosocket: ${this.markerTosocket}`)
+    // console.log(`markerObj : ${this.markerObj}, markerTosocket: ${this.markerTosocket}`)
    }
 
    checkDriverDisconnect(){
@@ -227,6 +249,7 @@ export class MapService {
    }
 
    joinBusRoom(){
+    console.log(`calling to join room: ${this.busName}`)
     this.socketService.emit('join-room', this.busName);
    }
 

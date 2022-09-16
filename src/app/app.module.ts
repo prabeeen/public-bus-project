@@ -9,13 +9,17 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
 import { ErrorInterceptor } from './error.interceptor';
 import {MatDialogModule} from '@angular/material/dialog';
-import { MatButton, MatButtonModule } from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { ErrorComponent } from './error/error/error.component';
+import { PhoneComponent } from './phone/phone.component';
+import {MatListModule} from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ErrorComponent
+    ErrorComponent,
+    PhoneComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +28,9 @@ import { ErrorComponent } from './error/error/error.component';
     BrowserAnimationsModule,
     HttpClientModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    MatListModule,
+    MatIconModule,
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}],

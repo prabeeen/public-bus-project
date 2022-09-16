@@ -12,4 +12,9 @@
       <span>Enable GPS</span><mat-slide-toggle (change)="gpsChanged($event, gpsToggle)" [disabled]="!checkGPSAvailability" #gpsToggle></mat-slide-toggle>
     </div>
   </mat-card>
+  <div class="buttonContainer">
+    <button (click)="onBottomSheetClicked()" mat-fab color="primary" aria-label="Example icon button with a delete icon">
+      <mat-icon>phone</mat-icon>
+    </button>
+  </div>
 </div>

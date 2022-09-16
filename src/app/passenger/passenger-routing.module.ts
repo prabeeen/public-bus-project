@@ -16,7 +16,7 @@ const routes: Routes = [
     canActivateChild: [AuthGuard],
       children:[
       { path: 'trackbus', component: TrackBusComponent},
-      { path: 'trackbus/:busName', component: TrackBusComponent},
+      // { path: 'trackbus/:busName', component: TrackBusComponent},
       { path: 'progress', component: BusProgressComponent},
       { path: 'payment', component: PaymentComponent},
     ]} ,

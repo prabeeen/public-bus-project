@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MapService } from 'src/app/services/map.service';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-track-bus',
@@ -10,23 +9,31 @@ import { ActivatedRoute } from '@angular/router';
 export class TrackBusComponent implements OnInit {
 
   busName: string | null = '';
-  constructor(private mapService: MapService,
-    private activatedRoute: ActivatedRoute,
+  constructor(private mapService: MapService
     ) { }
 
   ngOnInit(): void {
     this.mapService.buildMap();
-    this.busName = this.activatedRoute.snapshot.paramMap.get('busName');
+    // console.log(this.mapService.trackBusType)
+    // this.busName = this.activatedRoute.snapshot.paramMap.get('busName');
+    this.busName = this.mapService.trackBusType;
     if(this.busName)
     {
       this.mapService.sendBusName(this.busName);
       this.mapService.drawRoute();
       this.mapService.getExistingDriver();
       this.mapService.getNewDriver();
+      console.log(this.mapService.privateDriverId)
+      if(this.mapService.privateDriverId !== null){
+        this.mapService.leavePrivateRoom()
+      }
       this.mapService.joinBusRoom();
       this.mapService.checkMarkerRemove();
       this.mapService.getGPSData();
       this.mapService.checkDriverDisconnect();
+    }
+    else{
+      alert("You have not tracked any bus!")
     }
   }
 

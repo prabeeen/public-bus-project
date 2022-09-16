@@ -122,12 +122,12 @@ export class TransferGpsService {
   }
 
   getName(){
-    const name = prompt("What is your name?");
+    const name = "ram";
     return name;
   }
 
   getBusType(){
-    const busType = prompt("Bus Type:");
+    const busType = "Mayur Yatayat";
     return busType;
   }
 
@@ -156,7 +156,7 @@ export class TransferGpsService {
       }
       this.socketService.emit('sendGPS', this.coordLocation[i])
       i++;
-    }, 1000);
+    }, 3000);
 
     // this.gpsId = navigator.geolocation.watchPosition(data=>{
     //   const coordLocation:[number,number] = [data.coords.longitude,data.coords.latitude]

@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { TransferGpsService } from './transfer-gps.service';
+import { MapService } from './map.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +18,14 @@ export class AuthService {
   private isAuthenticated: boolean = false;
   private tokenTimer: any;
   private appUser: string = '';
+  private appUserId: string | null = null;
 
   horizontalPosition: MatSnackBarHorizontalPosition = "start";
   verticalPosition: MatSnackBarVerticalPosition = "bottom";
   dismissTimeSec: number = 2;
 
 
-  constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) { }
+  constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar, private transferGpsService: TransferGpsService,private mapService: MapService) { }
 
   getToken(){
     return this.token;
@@ -40,6 +43,10 @@ export class AuthService {
     return this.appUser;
   }
 
+  getAppUserId(){
+    return this.appUserId;
+  }
+
   authenticateUser(email:string, password: string){
     if(email.split('_')[0].toLowerCase() === 'driver'){
       this.http.post(this.baseUrl+'/api/admin/driver-login',{email: email.split("_")[1], password: password}).subscribe((response:any)=>{
@@ -48,12 +55,13 @@ export class AuthService {
         if(token){
           const expiresInDuration = response.expiresIn;
           this.appUser = 'driver'
+          this.appUserId = response.userId;
           this.setAuthTimer(expiresInDuration)
           this.isAuthenticated = true;
           this.authStatusListener.next(true);
           const now = new Date();
           const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-          this.saveAuthData(token, expirationDate, this.appUser)
+          this.saveAuthData(token, expirationDate, this.appUser, this.appUserId)
           console.log(expirationDate)
           this.router.navigate(['/driver']);
           this.showSnackBar('Authentication Successful!')
@@ -67,12 +75,13 @@ export class AuthService {
         if(token){
           const expiresInDuration = response.expiresIn;
           this.appUser = 'admin'
+          this.appUserId = response.userId
           this.setAuthTimer(expiresInDuration)
           this.isAuthenticated = true;
           this.authStatusListener.next(true);
           const now = new Date();
           const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-          this.saveAuthData(token, expirationDate, this.appUser)
+          this.saveAuthData(token, expirationDate, this.appUser, this.appUserId)
           console.log(expirationDate)
           this.router.navigate(['/admin']);
           this.showSnackBar('Authentication Successful!')
@@ -87,16 +96,19 @@ export class AuthService {
         if(token){
           const expiresInDuration = response.expiresIn;
           this.appUser = 'passenger'
+          this.appUserId = response.userId
           this.setAuthTimer(expiresInDuration)
           this.isAuthenticated = true;
           this.authStatusListener.next(true);
           const now = new Date();
           const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-          this.saveAuthData(token, expirationDate, this.appUser)
+          this.saveAuthData(token, expirationDate, this.appUser, this.appUserId)
           console.log(expirationDate)
           this.router.navigate(['/passenger']);
           this.showSnackBar('Authentication Successful!')
         }
+      },error=>{
+        alert(error.message)
       })
     }
   }
@@ -104,9 +116,14 @@ export class AuthService {
   logout(){
     this.token = null;
     this.isAuthenticated = false;
+    this.appUserId = null;
     this.authStatusListener.next(false);
+    if(this.appUser === 'driver'){
+      this.transferGpsService.noGPS();
+    }
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
+    this.mapService.removeBusType()
     this.router.navigate(['/']);
   }
 
@@ -158,6 +175,7 @@ export class AuthService {
     if(expiresIn > 0){
       this.token = authInfo.token;
       this.appUser = authInfo.appUser;
+      this.appUserId = authInfo.appUserId;
       this.isAuthenticated = true;
       this.authStatusListener.next(true);
       this.setAuthTimer(expiresIn / 1000);
@@ -176,6 +194,7 @@ export class AuthService {
   private getAuthData(){
     const token = localStorage.getItem("token")
     const expirationDate = localStorage.getItem("expiration")
+    const appUserId = localStorage.getItem("appUserId")
     const appUser = localStorage.getItem("appUser")
     if(!token || !expirationDate || !appUser){
       return
@@ -183,21 +202,25 @@ export class AuthService {
     return {
       token: token,
       expirationDate: new Date(expirationDate),
-      appUser: appUser
+      appUser: appUser,
+      appUserId: appUserId
 
     }
   }
 
-  private saveAuthData(token: string, expirationDate: Date, appUser: string){
+  private saveAuthData(token: string, expirationDate: Date, appUser: string, appUserId: string|null){
     localStorage.setItem("token", token);
     localStorage.setItem("expiration", expirationDate.toISOString())
     localStorage.setItem("appUser", appUser)
+    if(appUserId)
+    localStorage.setItem("appUserId", appUserId)
   }
 
   private clearAuthData(){
     localStorage.removeItem("token");
     localStorage.removeItem("expiration");
     localStorage.removeItem("appUser");
+    localStorage.removeItem("appUserId");
   }
 
 

@@ -11,6 +11,9 @@ import { MatCardModule } from '@angular/material/card';
 import {MatDividerModule} from '@angular/material/divider';
 import { SharedModule } from '../shared/shared.module';
 import { SendGPSComponent } from './send-gps/send-gps.component';
+import { MatButtonModule } from '@angular/material/button';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
+
 
 
 @NgModule({
@@ -28,6 +31,8 @@ import { SendGPSComponent } from './send-gps/send-gps.component';
     MatCardModule,
     MatDividerModule,
     SharedModule,
+    MatButtonModule,
+    MatBottomSheetModule
   ]
 })
 export class DriverModule { }

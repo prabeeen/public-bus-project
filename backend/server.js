@@ -72,14 +72,23 @@ io.on("connection", (socket)=>{
       }
     })
 
+    let room_array = []
     socket.on('join-room', (roomName)=>{
+      if(room_array.length > 0){
+        console.log(`room left: ${room_array[0]}`)
+        socket.leave(room_array[0])
+        room_array.shift()
+      }
+      room_array.push(roomName)
+      console.log(room_array)
       socket.join(roomName);
       // console.log(io.sockets.adapter.rooms.get(roomName).size);
     })
 
     socket.on('leave-room', (dumdata)=>{
       socket.to(roomObject[socket.id]).emit('remove-marker', socket.id)
-      if(Object.entries(roomObject[socket.id]).length > 0)
+      console.log(roomObject[socket.id])
+      if(roomObject[socket.id].length > 0)
       {
         for(const room of roomObject[socket.id]){
           console.log(room)
@@ -96,6 +105,11 @@ io.on("connection", (socket)=>{
       socket.leave(values[0]);
       roomObject[values[1]].push(socket.id);
       console.log(`Establishing private connection: ${roomObject}`);
+    })
+
+    socket.on('leave-private', (privateDriverId)=>{
+      console.log(`leave private connection ${privateDriverId}`)
+      roomObject[privateDriverId].pop();
     })
 
     socket.on('disconnect', ()=>{
