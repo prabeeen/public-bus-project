@@ -14,12 +14,15 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { PaymentInfoComponent } from './payment-info/payment-info.component';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
     AdminComponent,
     AddDriverComponent,
-    AddAdminComponent
+    AddAdminComponent,
+    PaymentInfoComponent
   ],
   imports: [
     CommonModule,
@@ -33,6 +36,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatTableModule
   ]
 })
 export class AdminModule { }

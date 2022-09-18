@@ -3,13 +3,45 @@
 
 
 <div class="container">
-  <mat-card>
+  <mat-card id="firstCard">
     <div>
       <span>Enable Wake Lock</span><mat-slide-toggle (change)="wakeLockChanged($event, wakeLockToggle)" [disabled]="!checkWakeLockAvailability" #wakeLockToggle></mat-slide-toggle>
     </div>
     <mat-divider></mat-divider>
     <div>
       <span>Enable GPS</span><mat-slide-toggle (change)="gpsChanged($event, gpsToggle)" [disabled]="!checkGPSAvailability" #gpsToggle></mat-slide-toggle>
+    </div>
+  </mat-card>
+  <mat-card id="secondCard">
+    <div class="payment-verify">
+      <span>Verify Payment</span><br><br>
+      <form [formGroup]="pidxPaymentForm">
+        <mat-form-field>
+          <input placeholder="Enter transaction Id" matInput formControlName="txnId"/>
+        </mat-form-field>
+        <button type="button" [disabled]="!pidxPaymentForm.valid" id="checkButton" mat-stroked-button color="primary" (click)="verifyPayment()">Check</button>
+      </form>
+      <div class="varification-info" [ngStyle]="{'margin-top': '1rem'}" *ngIf="verificationCheck">
+        <ul>
+          <li>
+            Name: {{verificationData.name}}
+          </li>
+          <li>
+            Mobile No.: {{verificationData.phone}}
+          </li>
+          <li>
+            Amount: {{verificationData.amount}}
+          </li>
+          <li>
+            Paid To: {{verificationData.mobile}}
+          </li>
+          <button [ngStyle]="{'margin-top': '1rem'}" type="button" mat-stroked-button color="primary" (click)="changeVerificationCheck()">Okay</button>
+        </ul>
+      </div>
+      <div *ngIf="!dupverificationCheck">
+        <span>Transaction not found in database</span><br>
+        <button [ngStyle]="{'margin-top': '1rem'}" type="button" mat-stroked-button color="primary" (click)="changedupverificationCheck()">Okay</button>
+      </div>
     </div>
   </mat-card>
   <div class="buttonContainer">

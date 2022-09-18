@@ -6,32 +6,51 @@ import { Injectable } from '@angular/core';
 })
 export class PaymentService {
   khaltiUrl: string = 'https://a.khalti.com/api/v2/epayment/initiate/';
-  localUrl: string = 'http://localhost:3001/api/payment'
+  localUrl: string = 'http://localhost:3001/api/payment';
+  headers = new HttpHeaders({
+    'content-type': 'application/json'
+  })
   constructor(private http: HttpClient) { }
 
-  performPayment(payForm:any){
-    const headers = new HttpHeaders({
-      'content-type': 'application/json'
-    })
-    console.log(payForm)
-    const jsonData = this.makeJson(payForm)
-    this.http.post(this.localUrl, jsonData, {headers: headers}).subscribe(data=>{
-      console.log(data)
+  performPayment(apiData: any){
+
+    this.http.post(this.localUrl+'/initiate_payment', JSON.stringify(apiData), {headers: this.headers}).subscribe((data: any)=>{
+      window.open(data.payment_url, '_blank')
     },err=>{
       console.log(err)
     })
   }
 
-  makeJson(form:any){
-    return {
-      amount: form.controls.amount.value,
-      purchase_order_id: "t100",
-      purchase_order_name: "sample_case",
-      customer_info: {
-      name: "Ram Narayan",
-      email: "example@gmail.com",
-      phone: "9811496763"
-    }
-    }
+  verifyPayment(verifyData: any){
+    console.log(verifyData)
+    this.http.post(this.localUrl+'/lookup_payment', JSON.stringify(verifyData), {headers: this.headers}).subscribe((data:any)=>{
+      console.log(data)
+      this.removeCustomerInfo()
+
+    },error=>{
+      console.log(error)
+    })
   }
+
+  private removeCustomerInfo(){
+    localStorage.removeItem("name");
+    localStorage.removeItem("email");
+    localStorage.removeItem("phone");
+  }
+
+  getUserPayments(){
+    return this.http.get(this.localUrl+'/get-payment')
+  }
+
+  getAdminPaymentsInfo(){
+    return this.http.get(this.localUrl+'/payment-info-admin')
+  }
+
+  verifyPaymentDriver(txnId: string){
+    const data = {
+      txnId: txnId
+    }
+    return this.http.post('http://localhost:3001/api/payment/payment-verify-driver', JSON.stringify(data), {headers: this.headers})
+  }
+
 }

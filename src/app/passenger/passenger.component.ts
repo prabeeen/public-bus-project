@@ -13,8 +13,9 @@ export class PassengerComponent implements OnInit, OnDestroy {
   sideNavContent:any = [
     {icon:'search', content:'Search Bus', route: 'searchbus'},
     {icon:'room', content:'Track Bus', route: 'trackbus'},
-    {icon:'pending', content:'Progress', route: 'progress'},
+    // {icon:'pending', content:'Progress', route: 'progress'},
     {icon:'payment', content:'Payment', route: 'payment'},
+    {icon:'history', content:'Payment History', route: 'payment-history'}
     ]
 
   constructor(private authService: AuthService) { }

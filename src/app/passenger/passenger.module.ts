@@ -21,6 +21,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatTableModule} from '@angular/material/table';
+import { PaymentVerifiedComponent } from './payment-verified/payment-verified.component';
+import { PaymentHistoryComponent } from './payment-history/payment-history.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +32,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     SearchBusComponent,
     BusProgressComponent,
     PaymentComponent,
+    PaymentVerifiedComponent,
+    PaymentHistoryComponent,
   ],
   imports: [
     CommonModule,
@@ -46,6 +51,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatInputModule,
     MatFormFieldModule,
     MatExpansionModule,
+    MatTableModule
 
   ]
 })

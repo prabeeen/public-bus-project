@@ -87,9 +87,12 @@ io.on("connection", (socket)=>{
 
     socket.on('leave-room', (dumdata)=>{
       socket.to(roomObject[socket.id]).emit('remove-marker', socket.id)
-      console.log(roomObject[socket.id])
-      if(roomObject[socket.id].length > 0)
-      {
+      console.log(`loggin room Object ${roomObject[socket.id]}`)
+      if(roomObject[socket.id] === undefined){
+        console.log("roomobject is undefined")
+      }
+      else{
+        if(roomObject[socket.id].length > 0){
         for(const room of roomObject[socket.id]){
           console.log(room)
           socket.leave(room);
@@ -99,6 +102,7 @@ io.on("connection", (socket)=>{
       console.log(`Rooms after leaving: ${roomObject[socket.id]}`)
 
       console.log(`${socket.id} : ${driverObject[socket.id]}`)
+    }
     })
 
     socket.on('private-connection', (values)=>{

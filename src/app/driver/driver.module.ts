@@ -13,6 +13,9 @@ import { SharedModule } from '../shared/shared.module';
 import { SendGPSComponent } from './send-gps/send-gps.component';
 import { MatButtonModule } from '@angular/material/button';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 
@@ -32,7 +35,11 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
     MatDividerModule,
     SharedModule,
     MatButtonModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule
   ]
 })
 export class DriverModule { }

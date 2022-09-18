@@ -12,7 +12,8 @@ export class AdminComponent implements OnInit {
   private authListenerSubs!: Subscription;
   sideNavContent:any = [
     {icon:"add",content:'Add Driver', route: 'add-driver'},
-    {icon:"add",content:'Add Admin', route: 'add-admin'}
+    {icon:"add",content:'Add Admin', route: 'add-admin'},
+    {icon:"payment",content:'Payment Info', route: 'payment-info'}
     ]
   constructor(private authService: AuthService) { }
 

@@ -6,7 +6,7 @@
   align-items: center;
   }
 
-  mat-card{
+  #firstCard{
     width: 50%;
     margin-top: 2rem;
     div{
@@ -17,6 +17,10 @@
       align-items: center;
     }
   }
+  #secondCard{
+    width: 50%;
+    margin-top: 1rem;
+  }
 
   .buttonContainer{
     position: absolute;
@@ -24,6 +28,9 @@
     right: 80px;
   }
 
+  #checkButton{
+    margin-left: 15%;
+  }
   // span{
   //   margin-right: 60%;
   //   margin-left: 3%;
@@ -35,7 +42,11 @@
   @media only screen and (max-width: 768px) {
     .container{
 
-      mat-card{
+      #firstCard{
+        width: 90%;
+      }
+
+      #secondCard{
         width: 90%;
       }
 
