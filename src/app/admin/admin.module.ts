@@ -16,13 +16,17 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { PaymentInfoComponent } from './payment-info/payment-info.component';
 import { MatTableModule } from '@angular/material/table';
+import { ManagePassengersComponent } from './manage-passengers/manage-passengers.component';
+import { ManageAdminComponent } from './manage-admin/manage-admin.component';
 
 @NgModule({
   declarations: [
     AdminComponent,
     AddDriverComponent,
     AddAdminComponent,
-    PaymentInfoComponent
+    PaymentInfoComponent,
+    ManagePassengersComponent,
+    ManageAdminComponent,
   ],
   imports: [
     CommonModule,

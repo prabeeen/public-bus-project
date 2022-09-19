@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable, Subscription } from 'rxjs';
 import { Payment } from 'src/app/interface/payment';
@@ -9,7 +9,7 @@ import { PaymentService } from 'src/app/services/payment.service';
   templateUrl: './payment-info.component.html',
   styleUrls: ['./payment-info.component.scss']
 })
-export class PaymentInfoComponent implements OnInit {
+export class PaymentInfoComponent implements OnInit, OnDestroy {
   dataSource = new MatTableDataSource<Payment>();
 
   paymentInfo$!: Observable<any>;
@@ -23,6 +23,10 @@ export class PaymentInfoComponent implements OnInit {
     this.paymentInfoSub = this.paymentInfo$.subscribe(payData=>{
       this.dataSource.data = payData.paymentData
       })
+  }
+
+  ngOnDestroy(): void {
+    this.paymentInfoSub.unsubscribe();
   }
 
 }

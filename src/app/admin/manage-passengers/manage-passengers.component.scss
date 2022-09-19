@@ -1,0 +1,17 @@
+.container{
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+table {
+  width: 80%;
+  // min-width: 760px;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 50%;
+}

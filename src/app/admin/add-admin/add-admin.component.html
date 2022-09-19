@@ -1,5 +1,4 @@
 <div class="addAdminContainer">
-
   <mat-card>
     <form class="example-form" [formGroup]="addAdminForm">
       <mat-form-field class="example-full-width" appearance="fill">
@@ -13,6 +12,18 @@
         <input matInput type="password" formControlName="password">
       </mat-form-field>
       <p [ngStyle]="{color: 'red'}" *ngIf="addAdminForm.get('password')?.touched && !addAdminForm.get('password')?.valid">Password Required</p>
+
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Name</mat-label>
+        <input type="text" matInput formControlName="name">
+      </mat-form-field>
+      <p [ngStyle]="{color: 'red'}" *ngIf="addAdminForm.get('name')?.touched && !addAdminForm.get('name')?.valid">Name Required</p>
+
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Contact</mat-label>
+        <input type="number" matInput formControlName="contact">
+      </mat-form-field>
+      <p [ngStyle]="{color: 'red'}" *ngIf="addAdminForm.get('contact')?.touched && !addAdminForm.get('contact')?.valid">Contact Required</p>
 
       <button mat-stroked-button type="button" (click)="onAddAdmin()" [disabled]="!addAdminForm.valid">Add Admin</button>
     </form>

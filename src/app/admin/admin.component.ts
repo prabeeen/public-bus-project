@@ -13,7 +13,9 @@ export class AdminComponent implements OnInit {
   sideNavContent:any = [
     {icon:"add",content:'Add Driver', route: 'add-driver'},
     {icon:"add",content:'Add Admin', route: 'add-admin'},
-    {icon:"payment",content:'Payment Info', route: 'payment-info'}
+    {icon:"payment",content:'Payment Info', route: 'payment-info'},
+    {icon:"groups",content:'Manage Passengers', route: 'manage-passenger'},
+    {icon:"manageaccount",content:'Manage Admin', route:'manage-admin'}
     ]
   constructor(private authService: AuthService) { }
 

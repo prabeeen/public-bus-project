@@ -1,4 +1,3 @@
-const { resetTempProgramHandlerForTest } = require('@angular/compiler-cli/src/transformers/program');
 const axios = require('axios');
 const Payment = require('../model/payment');
 const authorization_key = 'Key live_secret_key_e153b1ae707149d7bcb5d447a268dd2c';

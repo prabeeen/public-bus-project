@@ -14,7 +14,9 @@ export class AddAdminComponent implements OnInit {
   ngOnInit(): void {
     this.addAdminForm = new FormGroup({
       email : new FormControl(null, {validators: Validators.required}),
-      password: new FormControl(null, {validators: Validators.required})
+      password: new FormControl(null, {validators: Validators.required}),
+      name: new FormControl(null, {validators: Validators.required}),
+      contact: new FormControl(null, {validators: Validators.required})
     })
   }
 
@@ -25,7 +27,9 @@ export class AddAdminComponent implements OnInit {
 
     const admin: any = {
       email: this.addAdminForm.get('email')?.value,
-      password: this.addAdminForm.get('password')?.value
+      password: this.addAdminForm.get('password')?.value,
+      name: this.addAdminForm.get('name')?.value,
+      contact: this.addAdminForm.get('contact')?.value
     }
 
     this.adminService.addAdmin(admin)

@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 
 const Driver = require("../model/driver");
 const Admin = require("../model/admin");
+const User = require("../model/user");
 
 router.post('/add-driver', (req, res, next)=>{
   let driver;
@@ -31,7 +32,9 @@ router.post('/add-admin', (req, res, next)=>{
   bcrypt.hash(req.body.password, 10).then(hash=>{
     admin = new Admin({
       email: req.body.email,
-      password: hash
+      password: hash,
+      name: req.body.name,
+      contact: req.body.contact
     })
     admin.save().then((data)=>{
       res.status(201).json({
@@ -126,5 +129,66 @@ router.post('/admin-login', (req, res, next)=>{
     })
   });
 })
+
+router.get('/get-passenger', (req, res, next)=>{
+  User.find({}, {_id: true, username: true, email: true, phone: true, idType: true, idNo: true}).then(data=>{
+    console.log(data)
+    res.status(200).json({
+      message: 'Passenger retrieved successfully',
+      data: data
+    })
+  }).catch(err=>{
+    res.status(500).json({
+      message: 'Passenger retrieved failed',
+      err: err
+    })
+  })
+})
+
+
+router.delete('/delete-passenger/:id', (req, res, next)=>{
+  User.deleteOne({_id: req.params.id}).then(result=>{
+    console.log(result)
+    res.status(200).json({
+      message: "Successfully Deleted!"
+    })
+  }).catch(err=>{
+    res.status(500).json({
+      message: "Deletion Failed",
+      err: err
+    })
+  })
+})
+
+router.get('/get-admin', (req, res, next)=>{
+  Admin.find({}, {_id: true, name: true, email: true, contact: true}).then(data=>{
+    console.log(data)
+    res.status(200).json({
+      message: 'Passenger retrieved successfully',
+      data: data
+    })
+  }).catch(err=>{
+    res.status(500).json({
+      message: 'Passenger retrieved failed',
+      err: err
+    })
+  })
+})
+
+
+router.delete('/delete-admin/:id', (req, res, next)=>{
+  Admin.deleteOne({_id: req.params.id}).then(result=>{
+    console.log(result)
+    res.status(200).json({
+      message: "Successfully Deleted!"
+    })
+  }).catch(err=>{
+    res.status(500).json({
+      message: "Deletion Failed",
+      err: err
+    })
+  })
+})
+
 
 module.exports = router;

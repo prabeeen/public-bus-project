@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
@@ -7,7 +7,7 @@ import { AuthService } from '../services/auth.service';
   templateUrl: './driver.component.html',
   styleUrls: ['./driver.component.scss']
 })
-export class DriverComponent implements OnInit {
+export class DriverComponent implements OnInit, OnDestroy {
   userIsAuthenticated:boolean = false;
   private authListenerSubs!: Subscription;
   sideNavContent:any = [
@@ -26,4 +26,7 @@ export class DriverComponent implements OnInit {
     this.authService.logout();
   }
 
+  ngOnDestroy(){
+    this.authListenerSubs.unsubscribe();
+  }
 }

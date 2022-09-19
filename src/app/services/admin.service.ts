@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 })
 export class AdminService {
   private baseUrl: string = environment.baseUrl;
+  // rowToUpdate: any;
 
   constructor(private http: HttpClient) { }
 
@@ -21,4 +22,25 @@ export class AdminService {
       console.log(adminResponse)
     })
   }
+
+  getPassenger(){
+    return this.http.get(this.baseUrl+'/api/admin/get-passenger')
+  }
+
+  deletePassenger(id:any){
+    console.log(id)
+    return this.http.delete(this.baseUrl+'/api/admin/delete-passenger/'+id)
+  }
+
+  getAdmin(){
+    return this.http.get(this.baseUrl+'/api/admin/get-admin')
+  }
+
+  deleteAdmin(id:any){
+    return this.http.delete(this.baseUrl+'/api/admin/delete-admin/'+id)
+  }
+
+  // setUpdateAdmin(row:any){
+  //   this.rowToUpdate = row
+  // }
 }
