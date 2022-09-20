@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 
 const Driver = require("../model/driver");
@@ -71,7 +71,7 @@ router.post('/driver-login', (req, res, next)=>{
     if(!fetchedDriver) return;
     const token = jwt.sign(
       {email: fetchedDriver.email, driverId: fetchedDriver._id},
-      "the_quick_brown_fox_jumps_over_the_lazy_dog",
+      process.env.JWT_KEY,
       { expiresIn: "1h"}
       )
       res.status(200).json({
@@ -112,7 +112,7 @@ router.post('/admin-login', (req, res, next)=>{
     if(!fetchedAdmin) return;
     const token = jwt.sign(
       {email: fetchedAdmin.email, driverId: fetchedAdmin._id},
-      "the_quick_brown_fox_jumps_over_the_lazy_dog",
+      process.env.JWT_KEY,
       { expiresIn: "1h"}
       )
       res.status(200).json({

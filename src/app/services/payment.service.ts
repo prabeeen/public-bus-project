@@ -1,12 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PaymentService {
-  khaltiUrl: string = 'https://a.khalti.com/api/v2/epayment/initiate/';
-  localUrl: string = 'http://localhost:3001/api/payment';
+
+  private backendUrl: string = environment.apiUrl+'/payment/';
   headers = new HttpHeaders({
     'content-type': 'application/json'
   })
@@ -14,7 +15,7 @@ export class PaymentService {
 
   performPayment(apiData: any){
 
-    this.http.post(this.localUrl+'/initiate_payment', JSON.stringify(apiData), {headers: this.headers}).subscribe((data: any)=>{
+    this.http.post(this.backendUrl+'initiate_payment', JSON.stringify(apiData), {headers: this.headers}).subscribe((data: any)=>{
       window.open(data.payment_url, '_blank')
     },err=>{
       console.log(err)
@@ -23,7 +24,7 @@ export class PaymentService {
 
   verifyPayment(verifyData: any){
     console.log(verifyData)
-    this.http.post(this.localUrl+'/lookup_payment', JSON.stringify(verifyData), {headers: this.headers}).subscribe((data:any)=>{
+    this.http.post(this.backendUrl+'lookup_payment', JSON.stringify(verifyData), {headers: this.headers}).subscribe((data:any)=>{
       console.log(data)
       this.removeCustomerInfo()
 
@@ -39,18 +40,18 @@ export class PaymentService {
   }
 
   getUserPayments(){
-    return this.http.get(this.localUrl+'/get-payment')
+    return this.http.get(this.backendUrl+'get-payment')
   }
 
   getAdminPaymentsInfo(){
-    return this.http.get(this.localUrl+'/payment-info-admin')
+    return this.http.get(this.backendUrl+'payment-info-admin')
   }
 
   verifyPaymentDriver(txnId: string){
     const data = {
       txnId: txnId
     }
-    return this.http.post('http://localhost:3001/api/payment/payment-verify-driver', JSON.stringify(data), {headers: this.headers})
+    return this.http.post(this.backendUrl+'payment-verify-driver', JSON.stringify(data), {headers: this.headers})
   }
 
 }

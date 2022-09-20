@@ -128,6 +128,7 @@ export class TransferGpsService {
 
   getBusType(){
     const busType = "Mayur Yatayat";
+    // const busType = prompt("Enter your bus type")
     return busType;
   }
 
@@ -141,37 +142,37 @@ export class TransferGpsService {
   }
 
   noGPS(){
-    clearInterval(this.timeInterval);
-    // navigator.geolocation.clearWatch(this.gpsId);
+    // clearInterval(this.timeInterval);
+    navigator.geolocation.clearWatch(this.gpsId);
     this.socketService.emit('leave-room', '');
   }
 
   sendGPS(gpsToggler:any){
 
-    let i = 0;
-    this.timeInterval = setInterval(()=>{
-      if(i === this.coordLocation.length){
-        clearInterval(this.timeInterval)
-        return
-      }
-      this.socketService.emit('sendGPS', this.coordLocation[i])
-      i++;
-    }, 3000);
+    // let i = 0;
+    // this.timeInterval = setInterval(()=>{
+    //   if(i === this.coordLocation.length){
+    //     clearInterval(this.timeInterval)
+    //     return
+    //   }
+    //   this.socketService.emit('sendGPS', this.coordLocation[i])
+    //   i++;
+    // }, 2000);
 
-    // this.gpsId = navigator.geolocation.watchPosition(data=>{
-    //   const coordLocation:[number,number] = [data.coords.longitude,data.coords.latitude]
-    //   this.socketService.emit('sendGPS', coordLocation)
-    // },
-    // error =>{
-    //   console.log(error);
-    //   alert(error.message);
-    //   gpsToggler.checked = false;
-    // },
-    // {
-    //   enableHighAccuracy: true,
-    //   timeout: 5000,
-    //   maximumAge: 0
-    // })
+    this.gpsId = navigator.geolocation.watchPosition(data=>{
+      const coordLocation:[number,number] = [data.coords.longitude,data.coords.latitude]
+      this.socketService.emit('sendGPS', coordLocation)
+    },
+    error =>{
+      console.log(error);
+      alert(error.message);
+      gpsToggler.checked = false;
+    },
+    {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    })
   }
 
 

@@ -12,7 +12,6 @@ import { MapService } from './map.service';
 })
 export class AuthService {
   private token: any;
-  private baseUrl: string = environment.baseUrl;
   imagePath: string = ''
   private authStatusListener = new Subject<boolean>();
   private isAuthenticated: boolean = false;
@@ -49,7 +48,7 @@ export class AuthService {
 
   authenticateUser(email:string, password: string){
     if(email.split('_')[0].toLowerCase() === 'driver'){
-      this.http.post(this.baseUrl+'/api/admin/driver-login',{email: email.split("_")[1], password: password}).subscribe((response:any)=>{
+      this.http.post(environment.apiUrl+'/admin/driver-login',{email: email.split("_")[1], password: password}).subscribe((response:any)=>{
         const token = response.token;
         this.token = token;
         if(token){
@@ -69,7 +68,7 @@ export class AuthService {
       })
     }
     else if(email.split('_')[0].toLowerCase() === 'admin'){
-      this.http.post(this.baseUrl+'/api/admin/admin-login',{email: email.split("_")[1], password: password}).subscribe((response:any)=>{
+      this.http.post(environment.apiUrl+'/admin/admin-login',{email: email.split("_")[1], password: password}).subscribe((response:any)=>{
         const token = response.token;
         this.token = token;
         if(token){
@@ -90,7 +89,7 @@ export class AuthService {
 
     }
     else{
-      this.http.post(this.baseUrl+'/api/users/login',{email: email, password: password}).subscribe((response:any)=>{
+      this.http.post(environment.apiUrl+'/users/login',{email: email, password: password}).subscribe((response:any)=>{
         const token = response.token;
         this.token = token;
         if(token){
@@ -139,7 +138,7 @@ export class AuthService {
       userPostData.append('idImage', userData.idImage, userData.username);
       userPostData.append('idNo', String(userData.idNo));
 
-      this.http.post(this.baseUrl+'/api/users/signup', userPostData).subscribe((datareturn:any)=>{
+      this.http.post(environment.apiUrl+'/users/signup', userPostData).subscribe((datareturn:any)=>{
         this.imagePath = datareturn.data.idImagePath
         console.log(this.imagePath)
         this.router.navigate(["/"]);
@@ -156,7 +155,7 @@ export class AuthService {
       phone: userData.phone,
       address: userData.address,
     }
-    this.http.post(this.baseUrl+'/api/users/signup', jsonData).subscribe((datareturn:any)=>{
+    this.http.post(environment.apiUrl+'/users/signup', jsonData).subscribe((datareturn:any)=>{
       console.log(datareturn)
     },error=>{
       console.log(error)

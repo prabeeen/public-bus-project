@@ -8,7 +8,9 @@ export const environment = {
   mapbox: {
     accessToken: 'pk.eyJ1IjoicHJhYmluc2FoYW5pIiwiYSI6ImNsNHR3c25kczFoemUza3MyeW1wbWN2ZnoifQ.4JqFQBFv-ZovyTQ2GVjUkw'
   },
-  baseUrl: 'http://localhost:3001',
+  apiUrl: 'http://localhost:3001/api',
+  khalti_return_url: "http://localhost:4200/passenger/payment-verified/",
+  khalti_website_url: "http://localhost:4200",
 };
 
 /*

@@ -1,0 +1,6 @@
+{
+  "env": {
+    "MONGO_ATLAS_PW": "2dQKZ1t9eau4jwk6",
+    "JWT_KEY": "the_quick_brown_fox_jumps_over_the_lazy_dog"
+  }
+}

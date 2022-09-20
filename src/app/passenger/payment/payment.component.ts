@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PaymentService } from 'src/app/services/payment.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-payment',
@@ -32,8 +33,8 @@ export class PaymentComponent implements OnInit {
     }
 
     const data = {
-      return_url: "http://localhost:4200/passenger/payment-verified/",
-      website_url: "http://localhost:4200",
+      return_url: environment.khalti_return_url,
+      website_url: environment.khalti_website_url,
       amount: String(+this.paymentForm.value.amount * 100),
       purchase_order_id: this.paymentForm.value.busId,
       purchase_order_name: this.paymentForm.value.busName,

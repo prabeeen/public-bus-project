@@ -18,13 +18,11 @@ console.log(path.join(__dirname,'images'))
 const driverObject = {};
 const roomObject = {};
 
-app.use(cors({
-  origin: "http://localhost:4200"
-}));
+app.use(cors());
 app.use(express.json())
 
 
-mongoose.connect("mongodb+srv://prabin171342:2dQKZ1t9eau4jwk6@cluster0.wkgme8i.mongodb.net/?retryWrites=true&w=majority")
+mongoose.connect("mongodb+srv://prabin171342:" + process.env.MONGO_ATLAS_PW + "@cluster0.wkgme8i.mongodb.net/?retryWrites=true&w=majority")
 .then(()=>{
   console.log("database connected")
 })

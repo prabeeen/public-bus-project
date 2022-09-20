@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const multer = require('multer');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken")
 
 const User = require("../model/user");
@@ -107,7 +107,7 @@ router.post("/login", (req, res, next)=>{
     if(!fetchedUser) return;
     const token = jwt.sign(
       {email: fetchedUser.email, userId: fetchedUser._id},
-      "the_quick_brown_fox_jumps_over_the_lazy_dog",
+      process.env.JWT_KEY,
       { expiresIn: "1h"}
       )
       res.status(200).json({
