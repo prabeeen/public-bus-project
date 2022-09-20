@@ -2,6 +2,9 @@
   "name": "public-bus-project",
   "version": "0.0.0",
   "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
     "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
