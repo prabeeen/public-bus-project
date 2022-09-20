@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require("path")
 const app = express();
+const port = process.env.PORT || 3001;
 const cors = require('cors')
 const server = require('http').createServer(app);
 const mongoose = require('mongoose')
@@ -12,7 +13,8 @@ const adminRoutes = require('./routes/admin')
 // app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(bodyParser.json());
 
-app.use('/images',express.static(__dirname + '/images/'))
+app.use("/images",express.static(__dirname + "/images/"))
+app.use("/", express.static(path.join(__dirname,"angular")))
 console.log(path.join(__dirname,'images'))
 
 const driverObject = {};
@@ -31,14 +33,13 @@ mongoose.connect("mongodb+srv://prabin171342:" + process.env.MONGO_ATLAS_PW + "@
 });
 
 
-app.get('/', (req, res)=>{
-  res.send('<h1>Hello world Welcome</h1>')
-})
-
 
 app.use('/api/users', usersRoutes);
 app.use('/api/payment', paymentsRoutes);
 app.use('/api/admin', adminRoutes);
+app.use((req, res, next)=>{
+  res.sendFile(path.join(__dirname, "angular", "index.html"));
+})
 
 
 const io = require('socket.io')(server, {
@@ -123,6 +124,6 @@ io.on("connection", (socket)=>{
 })
 
 
-server.listen(3001, ()=>{
-    console.log("Server running on port 3001....")
+server.listen(port, ()=>{
+    console.log(`Server running on port ${port}....`)
 })
